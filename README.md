@@ -6,7 +6,7 @@ multiply speed, and builds a roofline from those measurements.
 | Benchmark | File | Measures |
 |---|---|---|
 | A1 load latency (pointer chasing) | `bench/latency.c` | ns per load, 4 KiB to 512 MiB |
-| A2 streaming bandwidth | `bench/bandwidth.c` | GB/s; `read_sum` is the roofline's B |
+| A2 streaming bandwidth | `bench/bandwidth.c` | GB/s; the faster of `read_sum8` / `read_sum16` is the roofline's B |
 | B GEMV / GEMM (NumPy, 1 thread) | `bench/matmul.py` | GFLOP/s; best GEMM is P_peak |
 
 `run_all.py` builds and runs everything on Windows, macOS and Linux. All OS-specific
@@ -42,7 +42,8 @@ py -3.12 -m venv .venv
 3. Don't touch the laptop or switch windows until it says Done.
 
 A full run refuses to start on battery. A2 prints a WARNING if the laptop changed
-speed mid-run, and the run ends with `RESULT:`. Any WARNING means that run is not data.
+speed while measuring B, and the run ends with `RESULT:`. Any WARNING means that run
+is not data. NOTE lines are expected findings to keep for the report, not errors.
 
 ## Run
 
@@ -66,5 +67,8 @@ Never edit files in `data/raw/`.
   the OS may still move them. Windows and Linux pin to logical CPU 0.
 - Beyond a few MiB, A1 latency includes TLB misses, not only DRAM time.
 - A2 counts bytes the STREAM way: copy and triad exclude the write-allocate read.
+- On at least one Intel laptop, the 16-sum read kernel slows to under half speed within
+  0.5 s while the 8-sum kernel does not (`bench/bw_trace.c` shows it over time). B is
+  therefore the faster of the two read kernels; both are reported.
 - Small-n GEMV is understated by per-call Python overhead; only matrices larger than
   the last-level cache test H2.

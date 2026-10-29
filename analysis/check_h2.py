@@ -4,7 +4,8 @@ check_h2.py -- Gate 1 first look at H2 for one laptop.
 
 Reads a2_bandwidth.csv and b_matmul.csv from data/raw/<machine_id>/ and prints
 the two roofline ceilings and how GEMV compares with the bandwidth prediction:
-    B       = median read_sum (GB/s)            memory ceiling
+    B       = faster of median read_sum8 and median read_sum16 (GB/s)
+                                                memory ceiling (see bench/bandwidth.c)
     P_peak  = highest median GEMM (GFLOP/s)     compute ceiling
     predicted GEMV = 0.5 FLOP/byte x B
 Only GEMV sizes whose matrix (4 n^2 bytes) is larger than the laptop's
@@ -33,14 +34,14 @@ def main():
     if len(sys.argv) != 2:
         sys.exit("usage: python analysis/check_h2.py data/raw/<machine_id>")
     d = sys.argv[1]
-    a2 = medians(os.path.join(d, "a2_bandwidth.csv"), lambda k: k == "read_sum")
+    a2 = medians(os.path.join(d, "a2_bandwidth.csv"), lambda k: k in ("read_sum8", "read_sum16"))
     b = medians(os.path.join(d, "b_matmul.csv"), lambda k: k in ("gemv_fp32", "gemm_fp32"))
 
-    bw = a2[("read_sum", None)]
+    (b_kernel, _), bw = max(a2.items(), key=lambda kv: kv[1])
     peak = max(v for (k, _), v in b.items() if k == "gemm_fp32")
     pred = 0.5 * bw
     print(f"\nRoofline ceilings for {os.path.basename(os.path.normpath(d))}")
-    print(f"  B      = {bw:7.2f} GB/s     (A2 read_sum, median)")
+    print(f"  B      = {bw:7.2f} GB/s     (A2 {b_kernel}, median; the faster read kernel)")
     print(f"  P_peak = {peak:7.2f} GFLOP/s  (best GEMM median)")
     print(f"  ridge point = P_peak / B = {peak / bw:.1f} FLOP/byte\n")
     print(f"H2 first look: predicted GEMV = 0.5 x B = {pred:.2f} GFLOP/s")

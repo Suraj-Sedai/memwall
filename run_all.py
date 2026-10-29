@@ -217,7 +217,7 @@ def main():
     bw = os.path.join("bench", "bandwidth" + EXE)
     build(cc, os.path.join("bench", "latency.c"), lat, [], log)
     # -fno-builtin keeps copy as our loop, not libc memcpy.
-    # -march=native (x86 only) gives read_sum the wide loads BLAS uses (see bandwidth.c).
+    # -march=native (x86 only) gives the read kernels the wide loads BLAS uses (see bandwidth.c).
     build(cc, os.path.join("bench", "bandwidth.c"), bw,
           ["-fno-builtin"] + (["-march=native"] if IS_X86 else []), log)
     system_info(os.path.join(out, "system_info.txt"))
@@ -227,7 +227,7 @@ def main():
     log("\n-- A1 latency sweep (1-2 min). Don't touch the laptop.")
     run_bench([lat, mid, a1_max], os.path.join(out, "a1_latency.csv"), log)
 
-    log("\n-- A2 bandwidth (about 10 s)")
+    log("\n-- A2 bandwidth (about 15 s)")
     run_bench([bw, mid], os.path.join(out, "a2_bandwidth.csv"), log)
 
     log("\n-- B matmul (about 1 min)")
