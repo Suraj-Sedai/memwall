@@ -1,0 +1,110 @@
+== suraj-x86  QUICK TEST (not data)  2026-10-29 17:55 ==
+Power: plugged in
+Don't switch windows or use the laptop until it says Done.
+Compiler: C:\mingw64\bin\gcc.EXE
+  gcc.EXE -O2 -Wall -static -o bench\latency.exe bench\latency.c
+  gcc.EXE -O2 -Wall -fno-builtin -march=native -static -o bench\bandwidth.exe bench\bandwidth.c
+
+-- A1 latency sweep (1-2 min). Don't touch the laptop.
+A1: pinned to logical CPU 0
+        4.0 KiB     0.79 ns/load
+        4.8 KiB     0.82 ns/load
+        5.6 KiB     0.82 ns/load
+        6.6 KiB     0.80 ns/load
+        8.0 KiB     0.85 ns/load
+        9.5 KiB     0.83 ns/load
+       11.2 KiB     0.80 ns/load
+       13.4 KiB     0.80 ns/load
+       16.0 KiB     0.81 ns/load
+       19.0 KiB     0.80 ns/load
+       22.6 KiB     0.81 ns/load
+       26.9 KiB     0.81 ns/load
+       32.0 KiB     0.80 ns/load
+       38.0 KiB     0.80 ns/load
+       45.2 KiB     0.80 ns/load
+       53.8 KiB     1.80 ns/load
+       64.0 KiB     1.81 ns/load
+       76.0 KiB     1.78 ns/load
+       90.5 KiB     1.80 ns/load
+      107.6 KiB     1.79 ns/load
+      128.0 KiB     1.80 ns/load
+      152.1 KiB     1.80 ns/load
+      181.0 KiB     1.78 ns/load
+      215.2 KiB     2.42 ns/load
+      256.0 KiB     3.02 ns/load
+      304.4 KiB     3.31 ns/load
+      362.0 KiB     3.42 ns/load
+      430.5 KiB     3.39 ns/load
+      512.0 KiB     3.46 ns/load
+      608.8 KiB     3.69 ns/load
+      724.0 KiB     3.80 ns/load
+      861.0 KiB     4.05 ns/load
+     1024.0 KiB     4.19 ns/load
+     1217.6 KiB     4.18 ns/load
+     1448.1 KiB     4.32 ns/load
+     1722.1 KiB     4.41 ns/load
+     2048.0 KiB     4.46 ns/load
+     2435.4 KiB     4.53 ns/load
+     2896.2 KiB     6.06 ns/load
+     3444.2 KiB     9.59 ns/load
+     4096.0 KiB    15.01 ns/load
+     4870.9 KiB    17.32 ns/load
+     5792.5 KiB    17.94 ns/load
+     6888.5 KiB    18.54 ns/load
+     8192.0 KiB    18.91 ns/load
+
+-- A2 bandwidth (about 10 s)
+A2: pinned to logical CPU 0
+A2: 3 arrays x 256 MiB
+  read_sum    9.26 GB/s (median of 5, 16 passes/run)
+WARNING: read_sum changed speed during the run (warm-up 18.37 GB/s, runs 8.52-11.52 GB/s). The laptop was busy or changed power state: plug in, Best performance, close everything, don't switch windows, re-run.
+  copy       22.36 GB/s (median of 5, 8 passes/run)
+  triad      10.04 GB/s (median of 5, 4 passes/run)
+WARNING: triad changed speed during the run (warm-up 12.54 GB/s, runs 8.85-10.88 GB/s). The laptop was busy or changed power state: plug in, Best performance, close everything, don't switch windows, re-run.
+  check: 16 sums 9.26 GB/s vs 8 sums 22.70 GB/s (-59.2%)
+WARNING: 8 sums beat 16 sums by more than 10%. Both kernels should run at memory speed, so the laptop most likely changed speed between them. Fix the run conditions and re-run.
+Plausibility: read_sum must be below the RAM's theoretical peak (channels x 8 B x MT/s) recorded in machines.csv.
+
+-- B matmul (about 1 min)
+B: pinned to logical CPU 0
+D:\Projects\memwall\.venv\lib\site-packages\numpy\__config__.py:155: UserWarning: Install `pyyaml` for better output
+  warnings.warn("Install `pyyaml` for better output", stacklevel=1)
+  gemv_fp32 n=  256     32.49 GFLOP/s (median)
+  gemv_fp32 n=  512     48.07 GFLOP/s (median)
+  gemv_fp32 n= 1024     24.86 GFLOP/s (median)
+  gemm_fp32 n=  256    108.00 GFLOP/s (median)
+  gemm_fp32 n=  512    113.60 GFLOP/s (median)
+  gemm_fp32 n= 1024    114.85 GFLOP/s (median)
+
+-- Benchmarks finished in 43 s
+
+== A1: cache steps and repeatability ==
+
+== suraj-x86: 1 sweep(s), 45 sizes ==
+Candidate cache boundaries (median rises >= 30%):
+    45.2 KiB ->   53.8 KiB:    0.80 ->    1.79 ns
+   181.0 KiB ->  215.2 KiB:    1.81 ->    2.40 ns
+     2.4 MiB ->    2.8 MiB:    4.53 ->    6.06 ns
+     2.8 MiB ->    3.4 MiB:    6.06 ->    9.57 ns
+     3.4 MiB ->    4.0 MiB:    9.57 ->   15.00 ns
+Repeatability: needs a second sweep (a1_latency_repeat.csv).
+
+Wrote data\summary\a1_latency_summary.csv
+
+== A2 + B: roofline ceilings and H2 ==
+
+Roofline ceilings for suraj-x86
+  B      =    9.26 GB/s     (A2 read_sum, median)
+  P_peak =  114.86 GFLOP/s  (best GEMM median)
+  ridge point = P_peak / B = 12.4 FLOP/byte
+
+H2 first look: predicted GEMV = 0.5 x B = 4.63 GFLOP/s
+      n    matrix  GEMV GFLOP/s  implied GB/s  GEMV / predicted
+   1024      4 MiB         24.86         49.73              5.37
+
+  Only rows whose matrix is larger than this laptop's last-level cache test H2.
+  Quick run: no GEMV matrix exceeds the cache, so H2 is not checked.
+
+Done. Results and run_log.txt are in data\raw\suraj-x86
+RESULT: 3 WARNING line(s) above. This run is NOT usable as data: fix what they say and run again.
+This was a QUICK TEST. Run again without --quick for real data.
