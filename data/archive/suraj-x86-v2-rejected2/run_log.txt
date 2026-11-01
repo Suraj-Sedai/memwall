@@ -1,0 +1,228 @@
+== suraj-x86  FULL RUN  2026-10-31 23:31 ==
+Power: plugged in
+Don't switch windows or use the laptop until it says Done.
+Compiler: C:\mingw64\bin\gcc.EXE
+  gcc.EXE -O2 -Wall -static -o bench\latency.exe bench\latency.c
+  gcc.EXE -O2 -Wall -fno-builtin -march=native -static -o bench\bandwidth.exe bench\bandwidth.c
+
+Settling 15 s before measuring...
+
+-- A1 latency sweep (1-2 min). Don't touch the laptop.
+A1: pinned to logical CPU 0
+        4.0 KiB     0.81 ns/load
+        4.8 KiB     0.80 ns/load
+        5.6 KiB     0.86 ns/load
+        6.6 KiB     0.79 ns/load
+        8.0 KiB     0.81 ns/load
+        9.5 KiB     0.81 ns/load
+       11.2 KiB     0.80 ns/load
+       13.4 KiB     0.79 ns/load
+       16.0 KiB     0.81 ns/load
+       19.0 KiB     0.83 ns/load
+       22.6 KiB     0.80 ns/load
+       26.9 KiB     0.80 ns/load
+       32.0 KiB     0.81 ns/load
+       38.0 KiB     0.79 ns/load
+       45.2 KiB     0.80 ns/load
+       53.8 KiB     1.80 ns/load
+       64.0 KiB     1.81 ns/load
+       76.0 KiB     1.85 ns/load
+       90.5 KiB     1.80 ns/load
+      107.6 KiB     1.86 ns/load
+      128.0 KiB     1.79 ns/load
+      152.1 KiB     1.81 ns/load
+      181.0 KiB     1.80 ns/load
+      215.2 KiB     2.40 ns/load
+      256.0 KiB     3.15 ns/load
+      304.4 KiB     3.35 ns/load
+      362.0 KiB     3.41 ns/load
+      430.5 KiB     3.43 ns/load
+      512.0 KiB     3.62 ns/load
+      608.8 KiB     3.65 ns/load
+      724.0 KiB     3.82 ns/load
+      861.0 KiB     4.03 ns/load
+     1024.0 KiB     4.12 ns/load
+     1217.6 KiB     4.26 ns/load
+     1448.1 KiB     4.47 ns/load
+     1722.1 KiB     4.40 ns/load
+     2048.0 KiB     4.44 ns/load
+     2435.4 KiB     4.56 ns/load
+     2896.2 KiB     5.06 ns/load
+     3444.2 KiB     9.63 ns/load
+     4096.0 KiB    14.82 ns/load
+     4870.9 KiB    17.66 ns/load
+     5792.5 KiB    18.12 ns/load
+     6888.5 KiB    18.70 ns/load
+     8192.0 KiB    19.01 ns/load
+     9741.9 KiB    20.03 ns/load
+    11585.1 KiB    19.90 ns/load
+    13777.1 KiB    22.26 ns/load
+    16384.0 KiB    21.76 ns/load
+    19483.9 KiB    23.62 ns/load
+    23170.4 KiB    28.97 ns/load
+    27554.4 KiB    35.53 ns/load
+    32768.0 KiB    72.76 ns/load
+    38967.9 KiB   131.66 ns/load
+    46340.9 KiB   149.31 ns/load
+    55108.9 KiB   177.72 ns/load
+    65536.0 KiB   179.40 ns/load
+    77935.9 KiB   179.44 ns/load
+    92681.9 KiB   178.09 ns/load
+   110217.9 KiB   184.50 ns/load
+   131072.0 KiB   186.75 ns/load
+   155871.8 KiB   184.26 ns/load
+   185363.8 KiB   187.12 ns/load
+   220435.9 KiB   189.65 ns/load
+   262144.0 KiB   193.70 ns/load
+   311743.5 KiB   194.07 ns/load
+   370727.5 KiB   197.06 ns/load
+   440871.9 KiB   207.35 ns/load
+   524288.0 KiB   204.78 ns/load
+
+-- A2 bandwidth (about 15 s)
+A2: pinned to logical CPU 0
+A2: 3 arrays x 256 MiB
+  read_sum8    20.90 GB/s (median of 5, 16 passes/run)
+  read_sum16    9.76 GB/s (median of 5, 8 passes/run)
+  copy         21.69 GB/s (median of 5, 4 passes/run)
+  triad         9.91 GB/s (median of 5, 2 passes/run)
+  B = 20.90 GB/s from read_sum8 (the faster read kernel)
+NOTE: read_sum16 is 53% slower than read_sum8. Expected on some CPUs; B uses the faster one. Keep both in the report.
+WARNING: read_sum8 (defines B) changed speed during the run (calibration 22.56 GB/s, runs 20.36-22.78 GB/s). The laptop was busy or changed power state: plug in, Best performance, close everything, don't switch windows, re-run.
+NOTE: read_sum16 varied during the run (calibration 11.17 GB/s, runs 9.19-11.04 GB/s). Not used for B; keep it for the report.
+NOTE: triad varied during the run (calibration 9.63 GB/s, runs 9.75-11.25 GB/s). Not used for B; keep it for the report.
+Plausibility: B must be below the RAM's theoretical peak (channels x 8 B x MT/s) recorded in machines.csv.
+
+-- B matmul (about 1 min)
+B: pinned to logical CPU 0
+  gemv_fp32 n=  256     37.99 GFLOP/s (median)
+  gemv_fp32 n=  512     47.75 GFLOP/s (median)
+  gemv_fp32 n= 1024     25.05 GFLOP/s (median)
+  gemv_fp32 n= 2048     21.35 GFLOP/s (median)
+  gemv_fp32 n= 4096     16.22 GFLOP/s (median)
+  gemv_fp32 n= 8192     10.24 GFLOP/s (median)
+  gemm_fp32 n=  256    112.93 GFLOP/s (median)
+  gemm_fp32 n=  512    117.22 GFLOP/s (median)
+  gemm_fp32 n= 1024    117.67 GFLOP/s (median)
+  gemm_fp32 n= 2048    115.92 GFLOP/s (median)
+  gemm_fp32 n= 4096    119.94 GFLOP/s (median)
+
+-- A1 repeat sweep for Gate 1 repeatability (1-2 min)
+A1: pinned to logical CPU 0
+        4.0 KiB     0.80 ns/load
+        4.8 KiB     0.81 ns/load
+        5.6 KiB     0.83 ns/load
+        6.6 KiB     0.84 ns/load
+        8.0 KiB     0.80 ns/load
+        9.5 KiB     0.82 ns/load
+       11.2 KiB     0.80 ns/load
+       13.4 KiB     0.81 ns/load
+       16.0 KiB     0.79 ns/load
+       19.0 KiB     0.81 ns/load
+       22.6 KiB     0.80 ns/load
+       26.9 KiB     0.81 ns/load
+       32.0 KiB     0.81 ns/load
+       38.0 KiB     0.80 ns/load
+       45.2 KiB     0.80 ns/load
+       53.8 KiB     1.84 ns/load
+       64.0 KiB     1.79 ns/load
+       76.0 KiB     1.81 ns/load
+       90.5 KiB     1.81 ns/load
+      107.6 KiB     1.81 ns/load
+      128.0 KiB     1.81 ns/load
+      152.1 KiB     1.82 ns/load
+      181.0 KiB     1.81 ns/load
+      215.2 KiB     2.40 ns/load
+      256.0 KiB     3.12 ns/load
+      304.4 KiB     3.27 ns/load
+      362.0 KiB     3.41 ns/load
+      430.5 KiB     3.37 ns/load
+      512.0 KiB     3.42 ns/load
+      608.8 KiB     3.66 ns/load
+      724.0 KiB     3.84 ns/load
+      861.0 KiB     3.95 ns/load
+     1024.0 KiB     4.07 ns/load
+     1217.6 KiB     4.25 ns/load
+     1448.1 KiB     4.41 ns/load
+     1722.1 KiB     4.45 ns/load
+     2048.0 KiB     4.49 ns/load
+     2435.4 KiB     4.83 ns/load
+     2896.2 KiB     4.77 ns/load
+     3444.2 KiB     9.84 ns/load
+     4096.0 KiB    14.89 ns/load
+     4870.9 KiB    18.09 ns/load
+     5792.5 KiB    18.33 ns/load
+     6888.5 KiB    18.76 ns/load
+     8192.0 KiB    18.60 ns/load
+     9741.9 KiB    19.96 ns/load
+    11585.1 KiB    20.81 ns/load
+    13777.1 KiB    20.97 ns/load
+    16384.0 KiB    21.05 ns/load
+    19483.9 KiB    22.74 ns/load
+    23170.4 KiB    25.19 ns/load
+    27554.4 KiB    76.28 ns/load
+    32768.0 KiB   131.14 ns/load
+    38967.9 KiB   176.92 ns/load
+    46340.9 KiB   185.24 ns/load
+    55108.9 KiB   201.39 ns/load
+    65536.0 KiB   180.97 ns/load
+    77935.9 KiB   190.43 ns/load
+    92681.9 KiB   184.20 ns/load
+   110217.9 KiB   201.78 ns/load
+   131072.0 KiB   200.97 ns/load
+   155871.8 KiB   202.43 ns/load
+   185363.8 KiB   197.89 ns/load
+   220435.9 KiB   200.53 ns/load
+   262144.0 KiB   195.34 ns/load
+   311743.5 KiB   194.72 ns/load
+   370727.5 KiB   205.43 ns/load
+   440871.9 KiB   196.55 ns/load
+   524288.0 KiB   195.64 ns/load
+
+-- Benchmarks finished in 155 s
+
+== A1: cache steps and repeatability ==
+
+== suraj-x86: 2 sweep(s), 69 sizes ==
+Candidate cache boundaries (median rises >= 30%):
+    45.2 KiB ->   53.8 KiB:    0.80 ->    1.81 ns
+   181.0 KiB ->  215.2 KiB:    1.80 ->    2.40 ns
+     2.8 MiB ->    3.4 MiB:    5.06 ->    9.76 ns
+     3.4 MiB ->    4.0 MiB:    9.76 ->   15.16 ns
+    26.9 MiB ->   32.0 MiB:   35.53 ->   79.31 ns
+    32.0 MiB ->   38.1 MiB:   79.31 ->  131.66 ns
+    38.1 MiB ->   45.3 MiB:  131.66 ->  171.19 ns
+Repeatability: sizes where sweep medians differ by > 5%:
+   512.0 KiB:   6.1%
+     2.8 MiB:   7.2%
+    19.0 MiB:   8.2%
+    32.0 MiB:  12.2%
+    45.3 MiB:   8.5%
+    90.5 MiB:   7.9%
+   107.6 MiB:   9.4%
+   128.0 MiB:  11.4%
+   152.2 MiB:   9.9%
+   181.0 MiB:   8.5%
+   215.3 MiB:   7.9%
+   256.0 MiB:   9.7%
+
+Wrote data\summary\a1_latency_summary.csv
+
+== A2 + B: roofline ceilings and H2 ==
+
+Roofline ceilings for suraj-x86
+  B      =   20.90 GB/s     (A2 read_sum8, median; the faster read kernel)
+  P_peak =  119.94 GFLOP/s  (best GEMM median)
+  ridge point = P_peak / B = 5.7 FLOP/byte
+
+H2 first look: predicted GEMV = 0.5 x B = 10.45 GFLOP/s
+      n    matrix  GEMV GFLOP/s  implied GB/s  GEMV / predicted
+   1024      4 MiB         25.05         50.10              2.40
+   2048     16 MiB         21.35         42.70              2.04
+   4096     64 MiB         16.23         32.45              1.55
+   8192    256 MiB         10.24         20.47              0.98
+
+  Only rows whose matrix is larger than this laptop's last-level cache test H2.
+
+Done. Results and run_log.txt are in data\raw\suraj-x86
+RESULT: 1 WARNING line(s) above. This run is NOT usable as data: fix what they say and run again.

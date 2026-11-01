@@ -1,0 +1,42 @@
+date_utc: 2026-11-01 03:17
+platform: Windows-10-10.0.26200-SP0
+machine: AMD64  processor: Intel64 Family 6 Model 198 Stepping 2, GenuineIntel
+python: 3.10.11
+
+
+
+Name                      : Intel(R) Core(TM) Ultra 9 275HX
+NumberOfCores             : 24
+NumberOfLogicalProcessors : 24
+L2CacheSize               : 40960
+L3CacheSize               : 36864
+MaxClockSpeed             : 2700
+
+
+
+
+
+Capacity             : 17179869184
+Speed                : 6400
+ConfiguredClockSpeed : 6400
+SMBIOSMemoryType     : 34
+Manufacturer         : Samsung
+PartNumber           : M435R2GA3PB1-CCPLC  
+
+Capacity             : 17179869184
+Speed                : 6400
+ConfiguredClockSpeed : 6400
+SMBIOSMemoryType     : 34
+Manufacturer         : Samsung
+PartNumber           : M435R2GA3PB1-CCPLC  
+
+
+
+
+
+Manufacturer : Acer
+Model        : Predator PHN16S-71
+
+
+
+
