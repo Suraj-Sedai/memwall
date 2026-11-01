@@ -1,0 +1,45 @@
+date_utc: 2026-11-01 04:03
+platform: macOS-26.6-arm64-arm-64bit
+machine: arm64  processor: arm
+python: 3.9.6
+
+hw.memsize: 17179869184
+hw.perflevel0.physicalcpu: 4
+hw.perflevel0.physicalcpu_max: 4
+hw.perflevel0.logicalcpu: 4
+hw.perflevel0.logicalcpu_max: 4
+hw.perflevel0.l1icachesize: 196608
+hw.perflevel0.l1dcachesize: 131072
+hw.perflevel0.l2cachesize: 16777216
+hw.perflevel0.cpusperl2: 4
+hw.perflevel0.name: Super
+hw.perflevel1.physicalcpu: 6
+hw.perflevel1.physicalcpu_max: 6
+hw.perflevel1.logicalcpu: 6
+hw.perflevel1.logicalcpu_max: 6
+hw.perflevel1.l1icachesize: 131072
+hw.perflevel1.l1dcachesize: 65536
+hw.perflevel1.l2cachesize: 6291456
+hw.perflevel1.cpusperl2: 6
+hw.perflevel1.name: Efficiency
+hw.cachelinesize: 128
+hw.l1dcachesize: 65536
+hw.l2cachesize: 6291456
+hw.memsize_usable: 16531308544
+machdep.cpu.brand_string: Apple M5
+Hardware:
+
+    Hardware Overview:
+
+      Model Name: MacBook Air
+      Model Identifier: Mac17,3
+      Model Number: MDHE4LL/A
+      Chip: Apple M5
+      Total Number of Cores: 10 (4 Super and 6 Efficiency)
+      Memory: 16 GB
+      System Firmware Version: 18000.161.9
+      OS Loader Version: 18000.161.9
+      Activation Lock Status: Disabled
+
+2026-11-01 00:03:23.458 system_profiler[1148:19132] hw.cpufamily: 0x1d5a87e8
+

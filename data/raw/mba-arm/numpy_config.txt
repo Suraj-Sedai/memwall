@@ -1,0 +1,81 @@
+numpy 2.0.2
+
+== np.show_config() ==
+{
+  "Compilers": {
+    "c": {
+      "name": "clang",
+      "linker": "ld64",
+      "version": "15.0.0",
+      "commands": "cc"
+    },
+    "cython": {
+      "name": "cython",
+      "linker": "cython",
+      "version": "3.0.11",
+      "commands": "cython"
+    },
+    "c++": {
+      "name": "clang",
+      "linker": "ld64",
+      "version": "15.0.0",
+      "commands": "c++"
+    }
+  },
+  "Machine Information": {
+    "host": {
+      "cpu": "aarch64",
+      "family": "aarch64",
+      "endian": "little",
+      "system": "darwin"
+    },
+    "build": {
+      "cpu": "aarch64",
+      "family": "aarch64",
+      "endian": "little",
+      "system": "darwin"
+    }
+  },
+  "Build Dependencies": {
+    "blas": {
+      "name": "accelerate",
+      "found": true,
+      "version": "unknown",
+      "detection method": "system",
+      "include directory": "unknown",
+      "lib directory": "unknown",
+      "openblas configuration": "unknown",
+      "pc file directory": "unknown"
+    },
+    "lapack": {
+      "name": "accelerate",
+      "found": true,
+      "version": "unknown",
+      "detection method": "system",
+      "include directory": "unknown",
+      "lib directory": "unknown",
+      "openblas configuration": "unknown",
+      "pc file directory": "unknown"
+    }
+  },
+  "Python Information": {
+    "path": "/private/var/folders/4d/0gnh84wj53j7wyk695q0tc_80000gn/T/build-env-kq4kuj35/bin/python",
+    "version": "3.9"
+  },
+  "SIMD Extensions": {
+    "baseline": [
+      "NEON",
+      "NEON_FP16",
+      "NEON_VFPV4",
+      "ASIMD"
+    ],
+    "found": [
+      "ASIMDHP"
+    ],
+    "not found": [
+      "ASIMDFHM"
+    ]
+  }
+}
+
+== threadpoolctl.threadpool_info() inside the 1-thread limit ==
