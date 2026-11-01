@@ -31,10 +31,12 @@
  *     run and the faster defines B. Both are in the CSV and in the report.
  *   Experiment: build with -DONE_ACC and read_sum16 becomes read_sum1 (one sum).
  *
- * Stability: a kernel's 5 runs must agree within 10% and match its last
- * calibration run within 15%. If the kernel that defines B fails, that is a
- * WARNING (the run is not data). Other kernels failing is a NOTE (recorded,
- * not used for B).
+ * Stability: a kernel's 5 runs should agree within 10% and match its last
+ * calibration run within 15%; otherwise a NOTE records the range. For the
+ * kernel that defines B, a change of more than 30% is a WARNING (the run is
+ * not data). The 30% limit comes from a noise test on the first laptop:
+ * 6 standalone runs on two P-cores all varied 5-26%, a property of the
+ * memory system, while real disturbances earlier caused ~2x drops.
  *
  * Copy and triad: built with -fno-builtin, otherwise gcc/clang replace the
  * copy loop with a call to libc memcpy, which differs by OS (glibc uses
@@ -246,16 +248,19 @@ int main(int argc, char **argv) {
     for (int k = 0; k < NK; k++) {
         double lo, hi;
         if (!unstable(warm[k], runs[k], med[k], &lo, &hi)) continue;
-        if (k == bk)
-            fprintf(stderr, "WARNING: %s (defines B) changed speed during the run "
+        double drift = med[k] > warm[k] ? med[k] / warm[k] - 1.0 : warm[k] / med[k] - 1.0;
+        if (k == bk && (hi / lo - 1.0 > 0.30 || drift > 0.30))
+            fprintf(stderr, "WARNING: %s (defines B) changed speed by more than 30%% during the run "
                             "(calibration %.2f GB/s, runs %.2f-%.2f GB/s). The laptop was busy "
                             "or changed power state: plug in, Best performance, close "
                             "everything, don't switch windows, re-run.\n",
                     KNAME[k], warm[k], lo, hi);
         else
             fprintf(stderr, "NOTE: %s varied during the run (calibration %.2f GB/s, "
-                            "runs %.2f-%.2f GB/s). Not used for B; keep it for the report.\n",
-                    KNAME[k], warm[k], lo, hi);
+                            "runs %.2f-%.2f GB/s). %s\n",
+                    KNAME[k], warm[k], lo, hi,
+                    k == bk ? "It defines B: report B with this range."
+                            : "Not used for B; keep it for the report.");
     }
     fprintf(stderr, "Plausibility: B must be below the RAM's theoretical peak "
                     "(channels x 8 B x MT/s) recorded in machines.csv.\n");
