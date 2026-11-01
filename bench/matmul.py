@@ -13,6 +13,13 @@ Algorithm (spec Section 8):
        gemv_fp32  y = A x   2 n^2 FLOPs   reads 4 n^2 bytes   -> 0.5 FLOP/byte
        gemm_fp32  C = A B   2 n^3 FLOPs   >= 12 n^2 bytes     -> n/6 FLOP/byte
 
+Correctness: after the warm-up call, the first rows of every result are
+checked against a float64 computation. Some BLAS libraries (Apple Accelerate)
+raise floating-point flags such as "divide by zero" while computing correct
+results; NumPy turns those into warnings, which also cost time on every call.
+So flags are recorded during the warm-up call, the result is verified, and the
+timed trials run with the flags ignored. A wrong result is a WARNING.
+
 Known bias at small n: every call pays a fixed Python + NumPy dispatch cost
 (about a microsecond). A 0.5 s trial does not remove it, because it is paid
 per call. GEMV at n = 256 takes only a few microseconds, so small-n GEMV
@@ -42,6 +49,7 @@ import io  # noqa: E402
 import re  # noqa: E402
 import sys  # noqa: E402
 import time  # noqa: E402
+import warnings  # noqa: E402
 
 import numpy as np  # noqa: E402
 from threadpoolctl import threadpool_info, threadpool_limits  # noqa: E402
@@ -87,7 +95,8 @@ def pin_to_one_core():
 
 def save_config(path):
     buf = io.StringIO()
-    with contextlib.redirect_stdout(buf):
+    with contextlib.redirect_stdout(buf), warnings.catch_warnings():
+        warnings.simplefilter("ignore")            # "Install pyyaml": cosmetic only
         np.show_config()
     with open(path, "w", encoding="utf-8") as f:
         f.write(f"numpy {np.__version__}\n\n== np.show_config() ==\n{buf.getvalue()}\n")
@@ -110,6 +119,21 @@ def trial(call, flops):
             return flops * calls / dt          # FLOP per ns == GFLOP/s
 
 
+def result_ok(A, rhs, out):
+    """First rows of out = A @ rhs, checked against float64. None if OK, else a description."""
+    k = min(A.shape[0], 64 if out.ndim == 1 else 16)
+    a = A[:k].astype(np.float64)
+    r = rhs.astype(np.float64)
+    ref = a @ r
+    scale = np.abs(a) @ np.abs(r)              # error bound grows with sum |a_i r_i|
+    err = np.abs(out[:k].astype(np.float64) - ref)
+    if not np.all(np.isfinite(out)):
+        return "inf or NaN in the result"
+    if np.all(err <= 1e-4 * scale + 1e-6):
+        return None
+    return f"max error {float(err.max()):.3g} in the first {k} rows"
+
+
 def main():
     if len(sys.argv) < 2 or not re.fullmatch(r"[a-z0-9]+-(x86|arm)", sys.argv[1]):
         log("machine_id must look like <label>-x86 or <label>-arm, lowercase, e.g. laptop2-arm\n"
@@ -129,6 +153,7 @@ def main():
             log(f"NOTE: forced to 1 thread (were {_overridden})")
 
         print("machine_id,benchmark,kernel,size_bytes,n,run,threads,value,unit")
+        fp_flags = set()
         for kernel, sizes in SIZES.items():
             for n in sizes:
                 A = rng.standard_normal((n, n), dtype=np.float32)
@@ -143,8 +168,15 @@ def main():
                     call = lambda: np.matmul(A, Bm, out=out)      # noqa: E731
                     flops = 2 * n ** 3
 
-                call()                                            # warm-up
-                vals = [trial(call, flops) for _ in range(RUNS)]
+                with np.errstate(divide="call", over="call", invalid="call",
+                                 call=lambda kind, _flag: fp_flags.add(kind)):
+                    call()                                        # warm-up
+                bad = result_ok(A, x if kernel == "gemv_fp32" else Bm, out)
+                if bad is not None:
+                    log(f"WARNING: {kernel} n={n} gave wrong results ({bad}). "
+                        "This run is not data; report it.")
+                with np.errstate(all="ignore"):
+                    vals = [trial(call, flops) for _ in range(RUNS)]
                 for r, v in enumerate(vals, start=1):
                     print(f"{machine_id},B,{kernel},{4 * n * n},{n},{r},1,{v:.3f},GFLOP_per_s")
                 sys.stdout.flush()
@@ -152,6 +184,10 @@ def main():
                 del A, out
                 if kernel == "gemm_fp32":
                     del Bm
+        if fp_flags:
+            log(f"NOTE: the BLAS library raised floating-point flags ({', '.join(sorted(fp_flags))}) "
+                "but every result checked correct against float64. Known behaviour of some "
+                "BLAS libraries (e.g. Apple Accelerate); flags are ignored during timing.")
 
 
 if __name__ == "__main__":

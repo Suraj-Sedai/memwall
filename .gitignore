@@ -1,6 +1,6 @@
 bench/latency
 bench/bandwidth
-bench/*.exe
+*.exe
 .venv/
 *.o
 __pycache__/
