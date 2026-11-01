@@ -220,7 +220,9 @@ def main():
     # -march=native (x86 only) gives the read kernels the wide loads BLAS uses (see bandwidth.c).
     build(cc, os.path.join("bench", "bandwidth.c"), bw,
           ["-fno-builtin"] + (["-march=native"] if IS_X86 else []), log)
-    system_info(os.path.join(out, "system_info.txt"))
+    settle = 2 if args.quick else 15
+    log(f"\nSettling {settle} s before measuring...")
+    time.sleep(settle)
 
     t0 = time.time()
     a1_max = "8" if args.quick else "512"
@@ -244,6 +246,7 @@ def main():
             os.remove(rep)                 # never mix an old repeat with a quick run
 
     log(f"\n-- Benchmarks finished in {time.time() - t0:.0f} s\n")
+    system_info(os.path.join(out, "system_info.txt"))
     log("== A1: cache steps and repeatability ==")
     run_report([sys.executable, os.path.join("analysis", "summarize.py")], log)
     log("\n== A2 + B: roofline ceilings and H2 ==")
