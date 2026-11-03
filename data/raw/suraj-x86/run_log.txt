@@ -1,4 +1,4 @@
-== suraj-x86  FULL RUN  2026-10-31 23:44 ==
+== suraj-x86  FULL RUN  2026-11-02 19:41 ==
 Power: plugged in
 Don't switch windows or use the laptop until it says Done.
 Compiler: C:\mingw64\bin\gcc.EXE
@@ -9,216 +9,321 @@ Settling 15 s before measuring...
 
 -- A1 latency sweep (1-2 min). Don't touch the laptop.
 A1: pinned to logical CPU 0
-        4.0 KiB     0.79 ns/load
-        4.8 KiB     0.80 ns/load
-        5.6 KiB     0.84 ns/load
-        6.6 KiB     0.81 ns/load
+        4.0 KiB     0.80 ns/load
+        4.8 KiB     0.88 ns/load
+        5.6 KiB     0.81 ns/load
+        6.6 KiB     0.82 ns/load
         8.0 KiB     0.80 ns/load
         9.5 KiB     0.80 ns/load
-       11.2 KiB     0.81 ns/load
+       11.2 KiB     0.80 ns/load
        13.4 KiB     0.79 ns/load
-       16.0 KiB     0.80 ns/load
-       19.0 KiB     0.89 ns/load
-       22.6 KiB     0.85 ns/load
-       26.9 KiB     0.81 ns/load
+       16.0 KiB     0.82 ns/load
+       19.0 KiB     0.79 ns/load
+       22.6 KiB     0.79 ns/load
+       26.9 KiB     0.79 ns/load
        32.0 KiB     0.80 ns/load
-       38.0 KiB     0.80 ns/load
-       45.2 KiB     0.82 ns/load
-       53.8 KiB     1.79 ns/load
-       64.0 KiB     1.77 ns/load
-       76.0 KiB     1.80 ns/load
-       90.5 KiB     1.82 ns/load
-      107.6 KiB     1.80 ns/load
+       38.0 KiB     0.81 ns/load
+       45.2 KiB     0.80 ns/load
+       53.8 KiB     1.77 ns/load
+       64.0 KiB     1.85 ns/load
+       76.0 KiB     1.84 ns/load
+       90.5 KiB     1.78 ns/load
+      107.6 KiB     1.78 ns/load
       128.0 KiB     1.80 ns/load
-      152.1 KiB     1.80 ns/load
-      181.0 KiB     1.82 ns/load
-      215.2 KiB     2.37 ns/load
-      256.0 KiB     3.03 ns/load
-      304.4 KiB     3.49 ns/load
-      362.0 KiB     3.39 ns/load
-      430.5 KiB     3.39 ns/load
-      512.0 KiB     3.47 ns/load
-      608.8 KiB     3.60 ns/load
+      152.1 KiB     1.79 ns/load
+      181.0 KiB     1.80 ns/load
+      215.2 KiB     2.38 ns/load
+      256.0 KiB     3.04 ns/load
+      304.4 KiB     3.24 ns/load
+      362.0 KiB     3.40 ns/load
+      430.5 KiB     3.41 ns/load
+      512.0 KiB     3.37 ns/load
+      608.8 KiB     3.61 ns/load
       724.0 KiB     3.79 ns/load
-      861.0 KiB     4.13 ns/load
+      861.0 KiB     4.01 ns/load
      1024.0 KiB     4.08 ns/load
      1217.6 KiB     4.18 ns/load
-     1448.1 KiB     4.39 ns/load
-     1722.1 KiB     4.38 ns/load
-     2048.0 KiB     4.42 ns/load
-     2435.4 KiB     4.52 ns/load
-     2896.2 KiB     5.53 ns/load
-     3444.2 KiB    10.20 ns/load
-     4096.0 KiB    15.33 ns/load
-     4870.9 KiB    17.26 ns/load
-     5792.5 KiB    17.87 ns/load
-     6888.5 KiB    18.91 ns/load
-     8192.0 KiB    18.86 ns/load
-     9741.9 KiB    19.47 ns/load
-    11585.1 KiB    20.11 ns/load
-    13777.1 KiB    21.82 ns/load
-    16384.0 KiB    22.88 ns/load
-    19483.9 KiB    25.27 ns/load
-    23170.4 KiB    42.02 ns/load
-    27554.4 KiB    70.25 ns/load
-    32768.0 KiB   141.14 ns/load
-    38967.9 KiB   162.69 ns/load
-    46340.9 KiB   175.58 ns/load
-    55108.9 KiB   182.38 ns/load
-    65536.0 KiB   187.69 ns/load
-    77935.9 KiB   200.39 ns/load
-    92681.9 KiB   200.78 ns/load
-   110217.9 KiB   187.14 ns/load
-   131072.0 KiB   198.10 ns/load
-   155871.8 KiB   201.66 ns/load
-   185363.8 KiB   194.52 ns/load
-   220435.9 KiB   209.14 ns/load
-   262144.0 KiB   186.96 ns/load
-   311743.5 KiB   197.46 ns/load
-   370727.5 KiB   195.08 ns/load
-   440871.9 KiB   208.85 ns/load
-   524288.0 KiB   196.43 ns/load
+     1448.1 KiB     4.36 ns/load
+     1722.1 KiB     4.49 ns/load
+     2048.0 KiB     4.43 ns/load
+     2435.4 KiB     4.49 ns/load
+     2896.2 KiB     4.62 ns/load
+     3444.2 KiB     9.88 ns/load
+     4096.0 KiB    14.92 ns/load
+     4870.9 KiB    18.31 ns/load
+     5792.5 KiB    18.18 ns/load
+     6888.5 KiB    18.43 ns/load
+     8192.0 KiB    18.34 ns/load
+     9741.9 KiB    19.53 ns/load
+    11585.1 KiB    20.10 ns/load
+    13777.1 KiB    20.38 ns/load
+    16384.0 KiB    23.33 ns/load
+    19483.9 KiB    25.51 ns/load
+    23170.4 KiB    34.26 ns/load
+    27554.4 KiB    71.39 ns/load
+    32768.0 KiB   125.11 ns/load
+    38967.9 KiB    98.30 ns/load
+    46340.9 KiB   153.50 ns/load
+    55108.9 KiB   163.66 ns/load
+    65536.0 KiB   186.43 ns/load
+    77935.9 KiB   195.01 ns/load
+    92681.9 KiB   197.33 ns/load
+   110217.9 KiB   202.54 ns/load
+   131072.0 KiB   199.67 ns/load
+   155871.8 KiB   198.56 ns/load
+   185363.8 KiB   192.59 ns/load
+   220435.9 KiB   201.99 ns/load
+   262144.0 KiB   208.68 ns/load
+   311743.5 KiB   194.84 ns/load
+   370727.5 KiB   198.73 ns/load
+   440871.9 KiB   192.88 ns/load
+   524288.0 KiB   198.86 ns/load
 
--- A2 bandwidth (about 15 s)
+-- A2 bandwidth at 256, 512, 1024, 1024, 512, 256 MiB per array (about 40-60 s)
+  A2 256 MiB per array: needs 0.75 GiB, 16.5 GiB free
 A2: pinned to logical CPU 0
 A2: 3 arrays x 256 MiB
-  read_sum8    22.56 GB/s (median of 5, 16 passes/run)
-  read_sum16    9.50 GB/s (median of 5, 4 passes/run)
-  copy         21.89 GB/s (median of 5, 8 passes/run)
-  triad        10.74 GB/s (median of 5, 2 passes/run)
-  B = 22.56 GB/s from read_sum8 (the faster read kernel)
-NOTE: read_sum16 is 58% slower than read_sum8. Expected on some CPUs; B uses the faster one. Keep both in the report.
-NOTE: read_sum16 varied during the run (calibration 9.31 GB/s, runs 8.95-11.48 GB/s). Not used for B; keep it for the report.
-NOTE: triad varied during the run (calibration 12.87 GB/s, runs 9.82-11.66 GB/s). Not used for B; keep it for the report.
+  read_sum8    22.83 GB/s (median of 5, 16 passes/run)
+  read_sum16   10.39 GB/s (median of 5, 8 passes/run)
+  copy         22.45 GB/s (median of 5, 8 passes/run)
+  triad         9.11 GB/s (median of 5, 2 passes/run)
+  B = 22.83 GB/s from read_sum8 (the faster read kernel)
+NOTE: read_sum16 is 54% slower than read_sum8. Expected on some CPUs; B uses the faster one. Keep both in the report.
+NOTE: read_sum8 varied during the run (calibration 22.82 GB/s, runs 20.82-23.13 GB/s). It defines B: report B with this range.
+NOTE: read_sum16 varied during the run (calibration 11.96 GB/s, runs 9.48-16.78 GB/s). Not used for B; keep it for the report.
+NOTE: copy varied during the run (calibration 21.07 GB/s, runs 20.49-22.59 GB/s). Not used for B; keep it for the report.
+NOTE: triad varied during the run (calibration 13.70 GB/s, runs 8.68-10.33 GB/s). Not used for B; keep it for the report.
+Plausibility: B must be below the RAM's theoretical peak (channels x 8 B x MT/s) recorded in machines.csv.
+  A2 512 MiB per array: needs 1.50 GiB, 16.5 GiB free
+A2: pinned to logical CPU 0
+A2: 3 arrays x 512 MiB
+  read_sum8    22.74 GB/s (median of 5, 8 passes/run)
+  read_sum16   11.72 GB/s (median of 5, 2 passes/run)
+  copy         21.85 GB/s (median of 5, 4 passes/run)
+  triad        10.66 GB/s (median of 5, 1 passes/run)
+  B = 22.74 GB/s from read_sum8 (the faster read kernel)
+NOTE: read_sum16 is 48% slower than read_sum8. Expected on some CPUs; B uses the faster one. Keep both in the report.
+NOTE: read_sum16 varied during the run (calibration 9.87 GB/s, runs 9.14-14.28 GB/s). Not used for B; keep it for the report.
+NOTE: copy varied during the run (calibration 19.82 GB/s, runs 20.22-22.81 GB/s). Not used for B; keep it for the report.
+NOTE: triad varied during the run (calibration 11.58 GB/s, runs 10.03-13.56 GB/s). Not used for B; keep it for the report.
+Plausibility: B must be below the RAM's theoretical peak (channels x 8 B x MT/s) recorded in machines.csv.
+  A2 1024 MiB per array: needs 3.00 GiB, 16.5 GiB free
+A2: pinned to logical CPU 0
+A2: 3 arrays x 1024 MiB
+  read_sum8    18.44 GB/s (median of 5, 2 passes/run)
+  read_sum16   11.49 GB/s (median of 5, 1 passes/run)
+  copy         21.92 GB/s (median of 5, 2 passes/run)
+  triad        10.56 GB/s (median of 5, 1 passes/run)
+  B = 18.44 GB/s from read_sum8 (the faster read kernel)
+NOTE: read_sum16 is 38% slower than read_sum8. Expected on some CPUs; B uses the faster one. Keep both in the report.
+NOTE: read_sum8 varied during the run (calibration 17.64 GB/s, runs 17.93-20.99 GB/s). It defines B: report B with this range.
+NOTE: read_sum16 varied during the run (calibration 9.97 GB/s, runs 10.41-12.20 GB/s). Not used for B; keep it for the report.
+NOTE: triad varied during the run (calibration 10.54 GB/s, runs 10.05-11.28 GB/s). Not used for B; keep it for the report.
+Plausibility: B must be below the RAM's theoretical peak (channels x 8 B x MT/s) recorded in machines.csv.
+  A2 1024 MiB per array: needs 3.00 GiB, 16.5 GiB free
+A2: pinned to logical CPU 0
+A2: 3 arrays x 1024 MiB
+  read_sum8    20.90 GB/s (median of 5, 2 passes/run)
+  read_sum16   12.25 GB/s (median of 5, 2 passes/run)
+  copy         21.93 GB/s (median of 5, 2 passes/run)
+  triad        10.83 GB/s (median of 5, 1 passes/run)
+  B = 20.90 GB/s from read_sum8 (the faster read kernel)
+NOTE: read_sum16 is 41% slower than read_sum8. Expected on some CPUs; B uses the faster one. Keep both in the report.
+NOTE: read_sum8 varied during the run (calibration 18.04 GB/s, runs 18.01-23.02 GB/s). It defines B: report B with this range.
+NOTE: read_sum16 varied during the run (calibration 10.91 GB/s, runs 10.09-13.50 GB/s). Not used for B; keep it for the report.
+NOTE: copy varied during the run (calibration 20.28 GB/s, runs 19.06-22.03 GB/s). Not used for B; keep it for the report.
+NOTE: triad varied during the run (calibration 9.65 GB/s, runs 8.63-14.15 GB/s). Not used for B; keep it for the report.
+Plausibility: B must be below the RAM's theoretical peak (channels x 8 B x MT/s) recorded in machines.csv.
+  A2 512 MiB per array: needs 1.50 GiB, 16.5 GiB free
+A2: pinned to logical CPU 0
+A2: 3 arrays x 512 MiB
+  read_sum8    22.01 GB/s (median of 5, 8 passes/run)
+  read_sum16    8.71 GB/s (median of 5, 2 passes/run)
+  copy         22.28 GB/s (median of 5, 4 passes/run)
+  triad         9.89 GB/s (median of 5, 1 passes/run)
+  B = 22.01 GB/s from read_sum8 (the faster read kernel)
+NOTE: read_sum16 is 60% slower than read_sum8. Expected on some CPUs; B uses the faster one. Keep both in the report.
+NOTE: read_sum16 varied during the run (calibration 10.30 GB/s, runs 8.65-12.13 GB/s). Not used for B; keep it for the report.
+NOTE: triad varied during the run (calibration 10.12 GB/s, runs 8.99-10.91 GB/s). Not used for B; keep it for the report.
+Plausibility: B must be below the RAM's theoretical peak (channels x 8 B x MT/s) recorded in machines.csv.
+  A2 256 MiB per array: needs 0.75 GiB, 16.5 GiB free
+A2: pinned to logical CPU 0
+A2: 3 arrays x 256 MiB
+  read_sum8    22.74 GB/s (median of 5, 16 passes/run)
+  read_sum16    9.34 GB/s (median of 5, 4 passes/run)
+  copy         22.24 GB/s (median of 5, 8 passes/run)
+  triad         9.86 GB/s (median of 5, 2 passes/run)
+  B = 22.74 GB/s from read_sum8 (the faster read kernel)
+NOTE: read_sum16 is 59% slower than read_sum8. Expected on some CPUs; B uses the faster one. Keep both in the report.
+NOTE: read_sum16 varied during the run (calibration 10.45 GB/s, runs 8.49-10.64 GB/s). Not used for B; keep it for the report.
+NOTE: triad varied during the run (calibration 9.87 GB/s, runs 8.98-11.15 GB/s). Not used for B; keep it for the report.
 Plausibility: B must be below the RAM's theoretical peak (channels x 8 B x MT/s) recorded in machines.csv.
 
--- B matmul (about 1 min)
+-- B matmul (about 40-60 s)
 B: pinned to logical CPU 0
-  gemv_fp32 n=  256     32.85 GFLOP/s (median)
-  gemv_fp32 n=  512     44.61 GFLOP/s (median)
-  gemv_fp32 n= 1024     23.91 GFLOP/s (median)
-  gemv_fp32 n= 2048     18.87 GFLOP/s (median)
-  gemv_fp32 n= 4096     16.84 GFLOP/s (median)
-  gemv_fp32 n= 8192     10.27 GFLOP/s (median)
-  gemm_fp32 n=  256    110.08 GFLOP/s (median)
-  gemm_fp32 n=  512    117.11 GFLOP/s (median)
-  gemm_fp32 n= 1024    119.30 GFLOP/s (median)
-  gemm_fp32 n= 2048    120.33 GFLOP/s (median)
-  gemm_fp32 n= 4096    121.23 GFLOP/s (median)
+  gemv_fp32 n=  256     36.49 GFLOP/s (median)
+  gemv_fp32 n=  512     45.35 GFLOP/s (median)
+  gemv_fp32 n= 1024     23.56 GFLOP/s (median)
+  gemv_fp32 n= 2048     20.67 GFLOP/s (median)
+  gemv_fp32 n= 4096     17.09 GFLOP/s (median)
+  gemv_fp32 n= 8192     11.27 GFLOP/s (median)
+  gemv_fp32 n=16384: needs 1.00 GiB, 16.4 GiB free
+  gemv_fp32 n=16384      9.83 GFLOP/s (median)
+  gemm_fp32 n=  256    108.32 GFLOP/s (median)
+  gemm_fp32 n=  512    113.10 GFLOP/s (median)
+  gemm_fp32 n= 1024    115.64 GFLOP/s (median)
+  gemm_fp32 n= 2048    116.22 GFLOP/s (median)
+  gemm_fp32 n= 4096    117.45 GFLOP/s (median)
 
 -- A1 repeat sweep for Gate 1 repeatability (1-2 min)
 A1: pinned to logical CPU 0
         4.0 KiB     0.79 ns/load
-        4.8 KiB     0.82 ns/load
-        5.6 KiB     0.94 ns/load
-        6.6 KiB     0.79 ns/load
-        8.0 KiB     0.81 ns/load
+        4.8 KiB     0.80 ns/load
+        5.6 KiB     0.79 ns/load
+        6.6 KiB     0.80 ns/load
+        8.0 KiB     0.82 ns/load
         9.5 KiB     0.80 ns/load
-       11.2 KiB     0.81 ns/load
-       13.4 KiB     0.79 ns/load
+       11.2 KiB     0.79 ns/load
+       13.4 KiB     0.78 ns/load
        16.0 KiB     0.80 ns/load
-       19.0 KiB     0.84 ns/load
-       22.6 KiB     0.80 ns/load
-       26.9 KiB     0.79 ns/load
-       32.0 KiB     0.81 ns/load
-       38.0 KiB     0.82 ns/load
-       45.2 KiB     0.79 ns/load
-       53.8 KiB     1.80 ns/load
-       64.0 KiB     1.79 ns/load
-       76.0 KiB     1.81 ns/load
-       90.5 KiB     1.78 ns/load
-      107.6 KiB     1.81 ns/load
-      128.0 KiB     1.78 ns/load
-      152.1 KiB     1.91 ns/load
-      181.0 KiB     1.79 ns/load
-      215.2 KiB     2.40 ns/load
-      256.0 KiB     3.07 ns/load
-      304.4 KiB     3.27 ns/load
-      362.0 KiB     3.45 ns/load
-      430.5 KiB     3.43 ns/load
-      512.0 KiB     3.40 ns/load
-      608.8 KiB     3.59 ns/load
-      724.0 KiB     3.77 ns/load
-      861.0 KiB     4.09 ns/load
-     1024.0 KiB     4.08 ns/load
-     1217.6 KiB     4.21 ns/load
-     1448.1 KiB     4.28 ns/load
-     1722.1 KiB     4.43 ns/load
+       19.0 KiB     0.79 ns/load
+       22.6 KiB     0.79 ns/load
+       26.9 KiB     0.80 ns/load
+       32.0 KiB     0.79 ns/load
+       38.0 KiB     0.79 ns/load
+       45.2 KiB     0.82 ns/load
+       53.8 KiB     1.77 ns/load
+       64.0 KiB     1.78 ns/load
+       76.0 KiB     1.78 ns/load
+       90.5 KiB     1.79 ns/load
+      107.6 KiB     1.76 ns/load
+      128.0 KiB     1.77 ns/load
+      152.1 KiB     1.78 ns/load
+      181.0 KiB     1.81 ns/load
+      215.2 KiB     2.37 ns/load
+      256.0 KiB     2.99 ns/load
+      304.4 KiB     3.17 ns/load
+      362.0 KiB     3.39 ns/load
+      430.5 KiB     3.34 ns/load
+      512.0 KiB     3.37 ns/load
+      608.8 KiB     3.57 ns/load
+      724.0 KiB     3.80 ns/load
+      861.0 KiB     3.94 ns/load
+     1024.0 KiB     4.04 ns/load
+     1217.6 KiB     4.18 ns/load
+     1448.1 KiB     4.34 ns/load
+     1722.1 KiB     4.39 ns/load
      2048.0 KiB     4.40 ns/load
-     2435.4 KiB     4.52 ns/load
-     2896.2 KiB     4.71 ns/load
-     3444.2 KiB    10.42 ns/load
-     4096.0 KiB    15.14 ns/load
-     4870.9 KiB    17.83 ns/load
-     5792.5 KiB    18.09 ns/load
-     6888.5 KiB    20.24 ns/load
-     8192.0 KiB    19.24 ns/load
-     9741.9 KiB    19.35 ns/load
-    11585.1 KiB    20.55 ns/load
-    13777.1 KiB    21.90 ns/load
-    16384.0 KiB    23.77 ns/load
-    19483.9 KiB    23.64 ns/load
-    23170.4 KiB    26.43 ns/load
-    27554.4 KiB    58.82 ns/load
-    32768.0 KiB    83.58 ns/load
-    38967.9 KiB    99.80 ns/load
-    46340.9 KiB   142.06 ns/load
-    55108.9 KiB   185.57 ns/load
-    65536.0 KiB   190.09 ns/load
-    77935.9 KiB   197.87 ns/load
-    92681.9 KiB   208.36 ns/load
-   110217.9 KiB   193.43 ns/load
-   131072.0 KiB   206.01 ns/load
-   155871.8 KiB   209.99 ns/load
-   185363.8 KiB   205.98 ns/load
-   220435.9 KiB   200.68 ns/load
-   262144.0 KiB   205.22 ns/load
-   311743.5 KiB   212.63 ns/load
-   370727.5 KiB   200.14 ns/load
-   440871.9 KiB   209.64 ns/load
-   524288.0 KiB   202.12 ns/load
+     2435.4 KiB     4.41 ns/load
+     2896.2 KiB     5.51 ns/load
+     3444.2 KiB     9.40 ns/load
+     4096.0 KiB    14.39 ns/load
+     4870.9 KiB    17.60 ns/load
+     5792.5 KiB    18.06 ns/load
+     6888.5 KiB    18.01 ns/load
+     8192.0 KiB    18.41 ns/load
+     9741.9 KiB    19.20 ns/load
+    11585.1 KiB    19.91 ns/load
+    13777.1 KiB    20.36 ns/load
+    16384.0 KiB    21.58 ns/load
+    19483.9 KiB    23.00 ns/load
+    23170.4 KiB    31.44 ns/load
+    27554.4 KiB    43.61 ns/load
+    32768.0 KiB    63.87 ns/load
+    38967.9 KiB   119.27 ns/load
+    46340.9 KiB   156.18 ns/load
+    55108.9 KiB   181.07 ns/load
+    65536.0 KiB   178.79 ns/load
+    77935.9 KiB   195.65 ns/load
+    92681.9 KiB   199.64 ns/load
+   110217.9 KiB   195.01 ns/load
+   131072.0 KiB   202.08 ns/load
+   155871.8 KiB   197.64 ns/load
+   185363.8 KiB   197.15 ns/load
+   220435.9 KiB   203.00 ns/load
+   262144.0 KiB   196.83 ns/load
+   311743.5 KiB   202.62 ns/load
+   370727.5 KiB   195.83 ns/load
+   440871.9 KiB   198.75 ns/load
+   524288.0 KiB   192.11 ns/load
 
--- Benchmarks finished in 153 s
+-- Benchmarks finished in 193 s
 
 == A1: cache steps and repeatability ==
 
+== mba-arm: 2 sweep(s), 69 sizes ==
+Candidate cache boundaries (median rises >= 30%):
+   128.0 KiB ->  152.1 KiB:    0.67 ->    1.93 ns
+   861.0 KiB ->    1.0 MiB:    3.26 ->    4.69 ns
+     1.0 MiB ->    1.2 MiB:    4.69 ->    6.80 ns
+    11.3 MiB ->   13.5 MiB:    9.04 ->   13.14 ns
+    13.5 MiB ->   16.0 MiB:   13.14 ->   17.22 ns
+    22.6 MiB ->   26.9 MiB:   24.46 ->   34.88 ns
+    26.9 MiB ->   32.0 MiB:   34.88 ->   47.50 ns
+    45.3 MiB ->   53.8 MiB:   61.52 ->   79.98 ns
+Repeatability: sizes where sweep medians differ by > 5%:
+   512.0 KiB:   5.8%
+   861.0 KiB:  19.4%
+     1.0 MiB:  14.2%
+     1.2 MiB:  27.4%
+     1.4 MiB:  16.3%
+     2.0 MiB:  19.8%
+     2.4 MiB:  19.9%
+     2.8 MiB:  19.3%
+     3.4 MiB:  18.7%
+     4.0 MiB:  17.9%
+     4.8 MiB:  17.5%
+     5.7 MiB:  17.1%
+     6.7 MiB:  16.9%
+     8.0 MiB:  16.7%
+     9.5 MiB:  16.5%
+    11.3 MiB:  25.3%
+    13.5 MiB:  65.0%
+    19.0 MiB:   6.5%
+    32.0 MiB:  19.1%
+
 == suraj-x86: 2 sweep(s), 69 sizes ==
 Candidate cache boundaries (median rises >= 30%):
-    45.2 KiB ->   53.8 KiB:    0.80 ->    1.78 ns
-   181.0 KiB ->  215.2 KiB:    1.82 ->    2.37 ns
-     2.8 MiB ->    3.4 MiB:    5.33 ->   10.18 ns
-     3.4 MiB ->    4.0 MiB:   10.18 ->   15.03 ns
-    19.0 MiB ->   22.6 MiB:   25.29 ->   42.02 ns
-    22.6 MiB ->   26.9 MiB:   42.02 ->   68.36 ns
-    26.9 MiB ->   32.0 MiB:   68.36 ->  110.59 ns
+    45.2 KiB ->   53.8 KiB:    0.80 ->    1.77 ns
+   181.0 KiB ->  215.2 KiB:    1.79 ->    2.38 ns
+     2.8 MiB ->    3.4 MiB:    4.64 ->    9.82 ns
+     3.4 MiB ->    4.0 MiB:    9.82 ->   14.92 ns
+    22.6 MiB ->   26.9 MiB:   27.93 ->   58.74 ns
+    26.9 MiB ->   32.0 MiB:   58.74 ->   77.50 ns
+    32.0 MiB ->   38.1 MiB:   77.50 ->  122.08 ns
+    45.3 MiB ->   53.8 MiB:  121.96 ->  164.32 ns
 Repeatability: sizes where sweep medians differ by > 5%:
-    22.6 KiB:   6.8%
-     2.8 MiB:  11.9%
-    19.0 MiB:   7.0%
-    22.6 MiB:  62.2%
-    26.9 MiB:  71.1%
-    32.0 MiB:  32.3%
-    45.3 MiB:  12.8%
-    53.8 MiB:   6.3%
-    64.0 MiB:   8.4%
+     2.8 MiB:  18.7%
+    19.0 MiB:   7.9%
+    26.9 MiB:  21.7%
+    32.0 MiB:  11.8%
+    45.3 MiB:  28.1%
+    53.8 MiB:  15.2%
 
 Wrote data\summary\a1_latency_summary.csv
 
 == A2 + B: roofline ceilings and H2 ==
 
 Roofline ceilings for suraj-x86
-  B      =   22.56 GB/s     (A2 read_sum8, median; the faster read kernel)
-  P_peak =  121.23 GFLOP/s  (best GEMM median)
-  ridge point = P_peak / B = 5.4 FLOP/byte
+  B      =   22.83 GB/s     (A2 read_sum8, median of runs 1-5 at 256 MiB; the faster read kernel)
+  Between sizes (all runs of each size, not used for the roofline):
+             22.78 GB/s     at  256 MiB per array (read_sum8, 10 runs)
+             22.27 GB/s     at  512 MiB per array (read_sum8, 10 runs)
+             19.18 GB/s     at 1024 MiB per array (read_sum8, 10 runs)
+  P_peak =  117.45 GFLOP/s  (best GEMM median)
+  ridge point = P_peak / B = 5.1 FLOP/byte
 
-H2 first look: predicted GEMV = 0.5 x B = 11.28 GFLOP/s
-      n    matrix  GEMV GFLOP/s  implied GB/s  GEMV / predicted
-   1024      4 MiB         23.91         47.83              2.12
-   2048     16 MiB         18.87         37.74              1.67
-   4096     64 MiB         16.84         33.68              1.49
-   8192    256 MiB         10.27         20.53              0.91
+H2 first look: predicted GEMV = 0.5 x B = 11.41 GFLOP/s
+  vs B = GEMV / predicted (roofline B); B@size = GEMV / (0.5 x B at that size, all runs)
+  H2 = row tests H2 (matrix larger than the LLC)
+      n    matrix  GEMV GFLOP/s  implied GB/s    vs B    B@256 MiB    B@512 MiB   B@1024 MiB
+   1024      4 MiB         23.56         47.11    2.06         2.07         2.12         2.46
+   2048     16 MiB         20.67         41.34    1.81         1.81         1.86         2.16
+   4096     64 MiB         17.09         34.17    1.50         1.50         1.53         1.78  H2
+   8192    256 MiB         11.27         22.54    0.99         0.99         1.01         1.18  H2
+  16384   1024 MiB          9.83         19.66    0.86         0.86         0.88         1.03  H2
 
-  Only rows whose matrix is larger than this laptop's last-level cache test H2.
+  Only rows whose matrix is larger than this laptop's last-level cache (36 MiB) test H2.
 
 Done. Results and run_log.txt are in data\raw\suraj-x86
 RESULT: no warnings.

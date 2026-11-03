@@ -34,6 +34,11 @@ IS_X86 = platform.machine().lower() in ("x86_64", "amd64")
 EXE = ".exe" if IS_WIN else ""
 THREAD_VARS = ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS",
                "VECLIB_MAXIMUM_THREADS")
+A2_MIB = (256, 512, 1024)        # A2 MiB per array; bandwidth.c allocates 3 arrays of this size
+A2_ORDER = A2_MIB + A2_MIB[::-1] # forward, then backward: 10 runs per size
+A2_RUNS = 5                      # timed runs per kernel in one bandwidth call (RUNS in bandwidth.c)
+A2_HEADER = "machine_id,benchmark,kernel,size_bytes,n,run,threads,value,unit"
+RAM_FRACTION = 0.5               # skip a run that needs more than this share of free RAM
 
 
 class Log:
@@ -91,16 +96,100 @@ def build(cc, src, out, extra, log):
         fail(f"compiling {src} failed (see messages above)")
 
 
-def run_bench(cmd, csv_path, log, env=None):
-    """stdout -> CSV file; stderr (progress) -> console and log."""
+def run_bench(cmd, csv_path, log, env=None, relabel=None):
+    """stdout -> CSV file; stderr (progress) -> console and log, through relabel() if given."""
     with open(csv_path, "w", newline="") as out:
         p = subprocess.Popen(cmd, stdout=out, stderr=subprocess.PIPE, text=True,
                              env=env, bufsize=1, errors="replace")
         for line in p.stderr:
-            log(line.rstrip())
+            line = line.rstrip()
+            log(relabel(line) if relabel else line)
         p.wait()
     if p.returncode != 0:
         fail(f"{os.path.basename(cmd[0])} exited with code {p.returncode}")
+
+
+def free_ram_bytes():
+    """RAM a new allocation can get without paging, in bytes; None if unknown.
+    Standard library only. Same function as in bench/matmul.py."""
+    try:
+        if IS_WIN:
+            import ctypes
+
+            class MemStatus(ctypes.Structure):
+                _fields_ = [("dwLength", ctypes.c_ulong), ("dwMemoryLoad", ctypes.c_ulong),
+                            ("ullTotalPhys", ctypes.c_ulonglong), ("ullAvailPhys", ctypes.c_ulonglong),
+                            ("ullTotalPageFile", ctypes.c_ulonglong), ("ullAvailPageFile", ctypes.c_ulonglong),
+                            ("ullTotalVirtual", ctypes.c_ulonglong), ("ullAvailVirtual", ctypes.c_ulonglong),
+                            ("ullAvailExtendedVirtual", ctypes.c_ulonglong)]
+            st = MemStatus()
+            st.dwLength = ctypes.sizeof(st)
+            if ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(st)):
+                return st.ullAvailPhys
+        elif IS_MAC:                     # free + inactive + speculative pages
+            out = capture(["vm_stat"])
+            page = int(re.search(r"page size of (\d+) bytes", out).group(1))
+            pages = re.findall(r"^Pages (?:free|inactive|speculative):\s+(\d+)", out, re.M)
+            if pages:
+                return page * sum(int(p) for p in pages)
+        else:
+            with open("/proc/meminfo") as f:
+                for line in f:
+                    if line.startswith("MemAvailable:"):
+                        return int(line.split()[1]) * 1024
+    except Exception:                                             # noqa: BLE001
+        pass
+    return None
+
+
+def enough_ram(need, what, log):
+    """False (and log why) if `need` bytes is more than RAM_FRACTION of free RAM."""
+    free = free_ram_bytes()
+    if free is None:
+        log(f"  {what}: free RAM unknown, running anyway")
+        return True
+    if need > RAM_FRACTION * free:
+        log(f"  {what}: skipped: not enough RAM "
+            f"(needs {need / 2**30:.2f} GiB, {free / 2**30:.1f} GiB free)")
+        return False
+    log(f"  {what}: needs {need / 2**30:.2f} GiB, {free / 2**30:.1f} GiB free")
+    return True
+
+
+def stability_note(line):
+    """bandwidth.c's 'changed speed by more than 30%' WARNING, logged as a NOTE.
+    Used for every A2 call except the one that defines B, so only that one can
+    mark the run as not usable."""
+    if line.startswith("WARNING:") and "changed speed by more than 30%" in line:
+        return "NOTE:" + line[len("WARNING:"):]
+    return line
+
+
+def run_a2(bw, mid, csv_path, log):
+    """bandwidth once per size in A2_ORDER; every row goes to one CSV with one header.
+    The second call at a size is renumbered runs 6-10 (B uses runs 1-5 at 256 MiB)."""
+    part = csv_path + ".part"
+    done = {}                                   # MiB -> bandwidth calls already made
+    with open(csv_path, "w") as out:
+        out.write(A2_HEADER + "\n")
+        for mib in A2_ORDER:
+            offset = A2_RUNS * done.get(mib, 0)
+            done[mib] = done.get(mib, 0) + 1
+            if not enough_ram(3 * (mib << 20), f"A2 {mib} MiB per array", log):
+                continue
+            defines_b = mib == A2_MIB[0] and offset == 0    # first 256 MiB call: runs 1-5 = B
+            run_bench([bw, mid, str(mib)], part, log,
+                      relabel=None if defines_b else stability_note)
+            with open(part) as f:
+                lines = f.readlines()
+            os.remove(part)
+            if not lines or lines[0].strip() != A2_HEADER:
+                fail(f"unexpected header from {os.path.basename(bw)}: {lines[:1]}")
+            for line in lines[1:]:
+                fields = line.rstrip("\n").split(",")
+                fields[5] = str(int(fields[5]) + offset)        # column 5 = run
+                out.write(",".join(fields) + "\n")
+            out.flush()
 
 
 def run_report(cmd, log):
@@ -162,7 +251,9 @@ def system_info(path):
         keep = re.compile(r"^hw\.(memsize|cachelinesize|l1dcachesize|l2cachesize|l3cachesize|perflevel)"
                           r"|^machdep\.cpu\.brand_string")
         parts.append("\n".join(l for l in out.splitlines() if keep.match(l)))
-        parts.append(capture(["system_profiler", "SPHardwareDataType"]))
+        hw = capture(["system_profiler", "SPHardwareDataType"])
+        private = re.compile(r"Serial Number|UUID|UDID")   # device identifiers; not for a public repo
+        parts.append("\n".join(l for l in hw.splitlines() if not private.search(l)))
     else:
         parts.append(capture(["lscpu"]))
         parts.append(capture(["lscpu", "-C"]))
@@ -229,10 +320,10 @@ def main():
     log("\n-- A1 latency sweep (1-2 min). Don't touch the laptop.")
     run_bench([lat, mid, a1_max], os.path.join(out, "a1_latency.csv"), log)
 
-    log("\n-- A2 bandwidth (about 15 s)")
-    run_bench([bw, mid], os.path.join(out, "a2_bandwidth.csv"), log)
+    log(f"\n-- A2 bandwidth at {', '.join(map(str, A2_ORDER))} MiB per array (about 40-60 s)")
+    run_a2(bw, mid, os.path.join(out, "a2_bandwidth.csv"), log)
 
-    log("\n-- B matmul (about 1 min)")
+    log("\n-- B matmul (about 40-60 s)")
     env = dict(os.environ, QUICK="1" if args.quick else "0", **{v: "1" for v in THREAD_VARS})
     run_bench([sys.executable, os.path.join("bench", "matmul.py"), mid, out],
               os.path.join(out, "b_matmul.csv"), log, env=env)

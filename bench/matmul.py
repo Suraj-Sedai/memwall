@@ -7,8 +7,11 @@ Algorithm (spec Section 8):
      set BEFORE numpy is imported, then threadpoolctl limits it again.
   2. Save np.show_config() and threadpool_info() to numpy_config.txt, which
      records the BLAS library and its thread count.
-  3. For each kernel and size n: random FP32 matrices (fixed seed), one
+  3. For each kernel and size n: random FP32 matrices (fixed seed per
+     kernel and size, so skipping a size leaves the others unchanged), one
      warm-up call, then 5 trials. One trial = repeat the call until >= 0.5 s.
+     Sizes: GEMV n = 256 ... 8192 and 16384 (a 1 GiB matrix);
+            GEMM n = 256 ... 4096.
   4. GFLOP/s = FLOPs per call * calls / seconds / 1e9.
        gemv_fp32  y = A x   2 n^2 FLOPs   reads 4 n^2 bytes   -> 0.5 FLOP/byte
        gemm_fp32  C = A B   2 n^3 FLOPs   >= 12 n^2 bytes     -> n/6 FLOP/byte
@@ -25,6 +28,10 @@ Known bias at small n: every call pays a fixed Python + NumPy dispatch cost
 per call. GEMV at n = 256 takes only a few microseconds, so small-n GEMV
 understates the hardware. H2 uses only sizes larger than the last-level
 cache, where one call takes milliseconds and the bias is negligible.
+
+Free RAM: before GEMV n >= 16384 (4 n^2 bytes = 1 GiB), free RAM is checked.
+If the run needs more than half of it, that size is skipped and the log
+says "skipped: not enough RAM": a matrix that pages would time the disk.
 
 Output: long-format CSV on stdout, one row per trial:
   machine_id,benchmark,kernel,size_bytes,n,run,threads,value,unit
@@ -59,9 +66,11 @@ RUNS = 5
 MIN_TRIAL_NS = 100_000_000 if QUICK else 500_000_000
 SEED = 341
 SIZES = {
-    "gemv_fp32": [256, 512, 1024] if QUICK else [256, 512, 1024, 2048, 4096, 8192],
+    "gemv_fp32": [256, 512, 1024] if QUICK else [256, 512, 1024, 2048, 4096, 8192, 16384],
     "gemm_fp32": [256, 512, 1024] if QUICK else [256, 512, 1024, 2048, 4096],
 }
+RAM_CHECK_N = 16384          # GEMV sizes from here up check free RAM first
+RAM_FRACTION = 0.5           # skip a size that needs more than this share of free RAM
 
 
 def log(msg):
@@ -91,6 +100,54 @@ def pin_to_one_core():
     except Exception as e:                                        # noqa: BLE001
         return f"WARNING: pinning failed ({e})"
     return "macOS: not pinned (pinning not possible)"
+
+
+def free_ram_bytes():
+    """RAM a new allocation can get without paging, in bytes; None if unknown.
+    Standard library only. Same function as in run_all.py."""
+    try:
+        if sys.platform == "win32":
+            import ctypes
+
+            class MemStatus(ctypes.Structure):
+                _fields_ = [("dwLength", ctypes.c_ulong), ("dwMemoryLoad", ctypes.c_ulong),
+                            ("ullTotalPhys", ctypes.c_ulonglong), ("ullAvailPhys", ctypes.c_ulonglong),
+                            ("ullTotalPageFile", ctypes.c_ulonglong), ("ullAvailPageFile", ctypes.c_ulonglong),
+                            ("ullTotalVirtual", ctypes.c_ulonglong), ("ullAvailVirtual", ctypes.c_ulonglong),
+                            ("ullAvailExtendedVirtual", ctypes.c_ulonglong)]
+            st = MemStatus()
+            st.dwLength = ctypes.sizeof(st)
+            if ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(st)):
+                return st.ullAvailPhys
+        elif sys.platform == "darwin":   # free + inactive + speculative pages
+            import subprocess
+            out = subprocess.run(["vm_stat"], capture_output=True, text=True, timeout=60).stdout
+            page = int(re.search(r"page size of (\d+) bytes", out).group(1))
+            pages = re.findall(r"^Pages (?:free|inactive|speculative):\s+(\d+)", out, re.M)
+            if pages:
+                return page * sum(int(p) for p in pages)
+        else:
+            with open("/proc/meminfo") as f:
+                for line in f:
+                    if line.startswith("MemAvailable:"):
+                        return int(line.split()[1]) * 1024
+    except Exception:                                             # noqa: BLE001
+        pass
+    return None
+
+
+def enough_ram(need, what):
+    """False (and log why) if `need` bytes is more than RAM_FRACTION of free RAM."""
+    free = free_ram_bytes()
+    if free is None:
+        log(f"  {what}: free RAM unknown, running anyway")
+        return True
+    if need > RAM_FRACTION * free:
+        log(f"  {what}: skipped: not enough RAM "
+            f"(needs {need / 2**30:.2f} GiB, {free / 2**30:.1f} GiB free)")
+        return False
+    log(f"  {what}: needs {need / 2**30:.2f} GiB, {free / 2**30:.1f} GiB free")
+    return True
 
 
 def save_config(path):
@@ -142,7 +199,6 @@ def main():
     machine_id = sys.argv[1]
     config_dir = sys.argv[2] if len(sys.argv) > 2 else "."
     log(f"B: {pin_to_one_core()}")
-    rng = np.random.default_rng(SEED)
 
     with threadpool_limits(limits=1):
         save_config(os.path.join(config_dir, "numpy_config.txt"))
@@ -154,8 +210,13 @@ def main():
 
         print("machine_id,benchmark,kernel,size_bytes,n,run,threads,value,unit")
         fp_flags = set()
-        for kernel, sizes in SIZES.items():
+        for k_index, (kernel, sizes) in enumerate(SIZES.items()):
             for n in sizes:
+                if (kernel == "gemv_fp32" and n >= RAM_CHECK_N
+                        and not enough_ram(4 * n * n + 8 * n, f"{kernel} n={n}")):
+                    continue
+                # Own seed per kernel and size: skipping a size never changes another's inputs.
+                rng = np.random.default_rng([SEED, k_index, n])
                 A = rng.standard_normal((n, n), dtype=np.float32)
                 if kernel == "gemv_fp32":
                     x = rng.standard_normal(n, dtype=np.float32)
