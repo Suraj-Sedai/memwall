@@ -1,0 +1,84 @@
+date_utc: 2026-11-13 21:21
+platform: Windows-11-10.0.26300-SP0
+machine: AMD64  processor: Intel64 Family 6 Model 204 Stepping 2, GenuineIntel
+python: 3.14.10
+
+
+
+Name                      : Intel(R) Core(TM) Ultra 9 386H
+NumberOfCores             : 16
+NumberOfLogicalProcessors : 16
+L2CacheSize               : 24576
+L3CacheSize               : 18432
+MaxClockSpeed             : 2100
+
+
+
+
+
+Capacity             : 4294967296
+Speed                : 8533
+ConfiguredClockSpeed : 8533
+SMBIOSMemoryType     : 35
+Manufacturer         : Samsung
+PartNumber           : K3KL9L90EM-MGCU               
+
+Capacity             : 4294967296
+Speed                : 8533
+ConfiguredClockSpeed : 8533
+SMBIOSMemoryType     : 35
+Manufacturer         : Samsung
+PartNumber           : K3KL9L90EM-MGCU               
+
+Capacity             : 4294967296
+Speed                : 8533
+ConfiguredClockSpeed : 8533
+SMBIOSMemoryType     : 35
+Manufacturer         : Samsung
+PartNumber           : K3KL9L90EM-MGCU               
+
+Capacity             : 4294967296
+Speed                : 8533
+ConfiguredClockSpeed : 8533
+SMBIOSMemoryType     : 35
+Manufacturer         : Samsung
+PartNumber           : K3KL9L90EM-MGCU               
+
+Capacity             : 4294967296
+Speed                : 8533
+ConfiguredClockSpeed : 8533
+SMBIOSMemoryType     : 35
+Manufacturer         : Samsung
+PartNumber           : K3KL9L90EM-MGCU               
+
+Capacity             : 4294967296
+Speed                : 8533
+ConfiguredClockSpeed : 8533
+SMBIOSMemoryType     : 35
+Manufacturer         : Samsung
+PartNumber           : K3KL9L90EM-MGCU               
+
+Capacity             : 4294967296
+Speed                : 8533
+ConfiguredClockSpeed : 8533
+SMBIOSMemoryType     : 35
+Manufacturer         : Samsung
+PartNumber           : K3KL9L90EM-MGCU               
+
+Capacity             : 4294967296
+Speed                : 8533
+ConfiguredClockSpeed : 8533
+SMBIOSMemoryType     : 35
+Manufacturer         : Samsung
+PartNumber           : K3KL9L90EM-MGCU               
+
+
+
+
+
+Manufacturer : LENOVO
+Model        : 83SK
+
+
+
+

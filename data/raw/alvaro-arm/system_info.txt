@@ -1,0 +1,43 @@
+date_utc: 2026-11-13 17:14
+platform: macOS-27.0.1-arm64-arm-64bit-Mach-O
+machine: arm64  processor: arm
+python: 3.14.3
+
+hw.memsize: 17179869184
+hw.perflevel0.physicalcpu: 6
+hw.perflevel0.physicalcpu_max: 6
+hw.perflevel0.logicalcpu: 6
+hw.perflevel0.logicalcpu_max: 6
+hw.perflevel0.l1icachesize: 196608
+hw.perflevel0.l1dcachesize: 131072
+hw.perflevel0.l2cachesize: 12582912
+hw.perflevel0.cpusperl2: 3
+hw.perflevel0.name: Performance
+hw.perflevel1.physicalcpu: 2
+hw.perflevel1.physicalcpu_max: 2
+hw.perflevel1.logicalcpu: 2
+hw.perflevel1.logicalcpu_max: 2
+hw.perflevel1.l1icachesize: 131072
+hw.perflevel1.l1dcachesize: 65536
+hw.perflevel1.l2cachesize: 4194304
+hw.perflevel1.cpusperl2: 2
+hw.perflevel1.name: Efficiency
+hw.cachelinesize: 128
+hw.l1dcachesize: 65536
+hw.l2cachesize: 4194304
+hw.memsize_usable: 16535044096
+machdep.cpu.brand_string: Apple M1 Pro
+Hardware:
+
+    Hardware Overview:
+
+      Model Name: MacBook Pro
+      Model Identifier: MacBookPro18,3
+      Model Number: MKGP3LL/A
+      Chip: Apple M1 Pro
+      Total Number of Cores: 8 (6 Performance and 2 Efficiency)
+      Memory: 16 GB
+      System Firmware Version: 20457.1.29
+      OS Loader Version: 20457.1.29
+      Activation Lock Status: Enabled
+

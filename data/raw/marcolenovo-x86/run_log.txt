@@ -1,0 +1,322 @@
+== marcolenovo-x86  FULL RUN  2026-11-13 16:16 ==
+Power: plugged in
+Don't switch windows or use the laptop until it says Done.
+Compiler: C:\Users\marco\AppData\Local\Microsoft\WinGet\Packages\BrechtSanders.WinLibs.POSIX.UCRT_Microsoft.Winget.Source_8wekyb3d8bbwe\mingw64\bin\gcc.EXE
+  gcc.EXE -O2 -Wall -static -o bench\latency.exe bench\latency.c
+  gcc.EXE -O2 -Wall -fno-builtin -march=native -static -o bench\bandwidth.exe bench\bandwidth.c
+
+Settling 15 s before measuring...
+
+-- A1 latency sweep (1-2 min). Don't touch the laptop.
+A1: pinned to logical CPU 0
+        4.0 KiB     0.84 ns/load
+        4.8 KiB     0.84 ns/load
+        5.6 KiB     0.84 ns/load
+        6.6 KiB     0.84 ns/load
+        8.0 KiB     0.84 ns/load
+        9.5 KiB     0.84 ns/load
+       11.2 KiB     0.84 ns/load
+       13.4 KiB     0.84 ns/load
+       16.0 KiB     0.84 ns/load
+       19.0 KiB     0.84 ns/load
+       22.6 KiB     0.84 ns/load
+       26.9 KiB     0.84 ns/load
+       32.0 KiB     0.84 ns/load
+       38.0 KiB     0.84 ns/load
+       45.2 KiB     0.84 ns/load
+       53.8 KiB     1.87 ns/load
+       64.0 KiB     1.88 ns/load
+       76.0 KiB     1.89 ns/load
+       90.5 KiB     1.89 ns/load
+      107.6 KiB     1.89 ns/load
+      128.0 KiB     1.89 ns/load
+      152.1 KiB     1.89 ns/load
+      181.0 KiB     1.89 ns/load
+      215.2 KiB     2.51 ns/load
+      256.0 KiB     3.19 ns/load
+      304.4 KiB     3.41 ns/load
+      362.0 KiB     3.57 ns/load
+      430.5 KiB     3.58 ns/load
+      512.0 KiB     3.58 ns/load
+      608.8 KiB     3.82 ns/load
+      724.0 KiB     4.01 ns/load
+      861.0 KiB     4.19 ns/load
+     1024.0 KiB     4.33 ns/load
+     1217.6 KiB     4.43 ns/load
+     1448.1 KiB     4.57 ns/load
+     1722.1 KiB     4.62 ns/load
+     2048.0 KiB     4.68 ns/load
+     2435.4 KiB     4.75 ns/load
+     2896.2 KiB     4.84 ns/load
+     3444.2 KiB     8.44 ns/load
+     4096.0 KiB    11.67 ns/load
+     4870.9 KiB    13.20 ns/load
+     5792.5 KiB    13.72 ns/load
+     6888.5 KiB    13.86 ns/load
+     8192.0 KiB    14.05 ns/load
+     9741.9 KiB    14.55 ns/load
+    11585.1 KiB    14.67 ns/load
+    13777.1 KiB    16.65 ns/load
+    16384.0 KiB    21.85 ns/load
+    19483.9 KiB    25.23 ns/load
+    23170.4 KiB    45.39 ns/load
+    27554.4 KiB    68.96 ns/load
+    32768.0 KiB    70.57 ns/load
+    38967.9 KiB    88.74 ns/load
+    46340.9 KiB    90.87 ns/load
+    55108.9 KiB    96.58 ns/load
+    65536.0 KiB    96.63 ns/load
+    77935.9 KiB    98.50 ns/load
+    92681.9 KiB   101.71 ns/load
+   110217.9 KiB   108.29 ns/load
+   131072.0 KiB   106.71 ns/load
+   155871.8 KiB   109.80 ns/load
+   185363.8 KiB   110.52 ns/load
+   220435.9 KiB   111.13 ns/load
+   262144.0 KiB   111.14 ns/load
+   311743.5 KiB   112.21 ns/load
+   370727.5 KiB   113.15 ns/load
+   440871.9 KiB   113.27 ns/load
+   524288.0 KiB   113.44 ns/load
+
+-- A2 bandwidth at 256, 512, 1024, 1024, 512, 256 MiB per array (about 40-60 s)
+  A2 256 MiB per array: needs 0.75 GiB, 15.8 GiB free
+A2: pinned to logical CPU 0
+A2: 3 arrays x 256 MiB
+  read_sum8    37.95 GB/s (median of 5, 16 passes/run)
+  read_sum16   36.30 GB/s (median of 5, 16 passes/run)
+  copy         37.08 GB/s (median of 5, 8 passes/run)
+  triad        40.45 GB/s (median of 5, 8 passes/run)
+  B = 37.95 GB/s from read_sum8 (the faster read kernel)
+Plausibility: B must be below the RAM's theoretical peak (channels x 8 B x MT/s) recorded in machines.csv.
+  A2 512 MiB per array: needs 1.50 GiB, 15.8 GiB free
+A2: pinned to logical CPU 0
+A2: 3 arrays x 512 MiB
+  read_sum8    37.61 GB/s (median of 5, 8 passes/run)
+  read_sum16   35.89 GB/s (median of 5, 8 passes/run)
+  copy         36.97 GB/s (median of 5, 4 passes/run)
+  triad        40.19 GB/s (median of 5, 4 passes/run)
+  B = 37.61 GB/s from read_sum8 (the faster read kernel)
+Plausibility: B must be below the RAM's theoretical peak (channels x 8 B x MT/s) recorded in machines.csv.
+  A2 1024 MiB per array: needs 3.00 GiB, 15.8 GiB free
+A2: pinned to logical CPU 0
+A2: 3 arrays x 1024 MiB
+  read_sum8    37.45 GB/s (median of 5, 4 passes/run)
+  read_sum16   35.41 GB/s (median of 5, 4 passes/run)
+  copy         36.85 GB/s (median of 5, 2 passes/run)
+  triad        40.16 GB/s (median of 5, 2 passes/run)
+  B = 37.45 GB/s from read_sum8 (the faster read kernel)
+Plausibility: B must be below the RAM's theoretical peak (channels x 8 B x MT/s) recorded in machines.csv.
+  A2 1024 MiB per array: needs 3.00 GiB, 15.8 GiB free
+A2: pinned to logical CPU 0
+A2: 3 arrays x 1024 MiB
+  read_sum8    37.26 GB/s (median of 5, 4 passes/run)
+  read_sum16   35.62 GB/s (median of 5, 4 passes/run)
+  copy         36.81 GB/s (median of 5, 2 passes/run)
+  triad        40.25 GB/s (median of 5, 2 passes/run)
+  B = 37.26 GB/s from read_sum8 (the faster read kernel)
+Plausibility: B must be below the RAM's theoretical peak (channels x 8 B x MT/s) recorded in machines.csv.
+  A2 512 MiB per array: needs 1.50 GiB, 15.8 GiB free
+A2: pinned to logical CPU 0
+A2: 3 arrays x 512 MiB
+  read_sum8    38.06 GB/s (median of 5, 8 passes/run)
+  read_sum16   35.92 GB/s (median of 5, 8 passes/run)
+  copy         37.12 GB/s (median of 5, 4 passes/run)
+  triad        40.22 GB/s (median of 5, 4 passes/run)
+  B = 38.06 GB/s from read_sum8 (the faster read kernel)
+Plausibility: B must be below the RAM's theoretical peak (channels x 8 B x MT/s) recorded in machines.csv.
+  A2 256 MiB per array: needs 0.75 GiB, 15.8 GiB free
+A2: pinned to logical CPU 0
+A2: 3 arrays x 256 MiB
+  read_sum8    38.03 GB/s (median of 5, 16 passes/run)
+  read_sum16   36.05 GB/s (median of 5, 16 passes/run)
+  copy         37.01 GB/s (median of 5, 8 passes/run)
+  triad        40.35 GB/s (median of 5, 8 passes/run)
+  B = 38.03 GB/s from read_sum8 (the faster read kernel)
+Plausibility: B must be below the RAM's theoretical peak (channels x 8 B x MT/s) recorded in machines.csv.
+
+-- B matmul (about 40-60 s)
+B: pinned to logical CPU 0
+  gemv_fp32 n=  256     41.37 GFLOP/s (median)
+  gemv_fp32 n=  512     54.20 GFLOP/s (median)
+  gemv_fp32 n= 1024     26.72 GFLOP/s (median)
+  gemv_fp32 n= 2048     24.40 GFLOP/s (median)
+  gemv_fp32 n= 4096     20.25 GFLOP/s (median)
+  gemv_fp32 n= 8192     18.58 GFLOP/s (median)
+  gemv_fp32 n=16384: needs 1.00 GiB, 15.8 GiB free
+  gemv_fp32 n=16384     18.41 GFLOP/s (median)
+  gemm_fp32 n=  256    127.10 GFLOP/s (median)
+  gemm_fp32 n=  512    133.40 GFLOP/s (median)
+  gemm_fp32 n= 1024    136.40 GFLOP/s (median)
+  gemm_fp32 n= 2048    138.77 GFLOP/s (median)
+  gemm_fp32 n= 4096    140.70 GFLOP/s (median)
+
+-- A1 repeat sweep for Gate 1 repeatability (1-2 min)
+A1: pinned to logical CPU 0
+        4.0 KiB     0.84 ns/load
+        4.8 KiB     0.84 ns/load
+        5.6 KiB     0.84 ns/load
+        6.6 KiB     0.84 ns/load
+        8.0 KiB     0.84 ns/load
+        9.5 KiB     0.84 ns/load
+       11.2 KiB     0.84 ns/load
+       13.4 KiB     0.84 ns/load
+       16.0 KiB     0.84 ns/load
+       19.0 KiB     0.84 ns/load
+       22.6 KiB     0.84 ns/load
+       26.9 KiB     0.84 ns/load
+       32.0 KiB     0.84 ns/load
+       38.0 KiB     0.84 ns/load
+       45.2 KiB     0.84 ns/load
+       53.8 KiB     1.89 ns/load
+       64.0 KiB     1.88 ns/load
+       76.0 KiB     1.89 ns/load
+       90.5 KiB     1.89 ns/load
+      107.6 KiB     1.89 ns/load
+      128.0 KiB     1.90 ns/load
+      152.1 KiB     1.89 ns/load
+      181.0 KiB     1.93 ns/load
+      215.2 KiB     2.48 ns/load
+      256.0 KiB     3.12 ns/load
+      304.4 KiB     3.48 ns/load
+      362.0 KiB     3.57 ns/load
+      430.5 KiB     3.57 ns/load
+      512.0 KiB     3.57 ns/load
+      608.8 KiB     3.82 ns/load
+      724.0 KiB     4.01 ns/load
+      861.0 KiB     4.20 ns/load
+     1024.0 KiB     4.32 ns/load
+     1217.6 KiB     4.44 ns/load
+     1448.1 KiB     4.56 ns/load
+     1722.1 KiB     4.62 ns/load
+     2048.0 KiB     4.69 ns/load
+     2435.4 KiB     4.78 ns/load
+     2896.2 KiB     4.85 ns/load
+     3444.2 KiB     8.42 ns/load
+     4096.0 KiB    11.68 ns/load
+     4870.9 KiB    13.40 ns/load
+     5792.5 KiB    13.69 ns/load
+     6888.5 KiB    13.83 ns/load
+     8192.0 KiB    14.11 ns/load
+     9741.9 KiB    14.34 ns/load
+    11585.1 KiB    15.22 ns/load
+    13777.1 KiB    17.10 ns/load
+    16384.0 KiB    26.53 ns/load
+    19483.9 KiB    29.81 ns/load
+    23170.4 KiB    42.52 ns/load
+    27554.4 KiB    55.44 ns/load
+    32768.0 KiB    80.28 ns/load
+    38967.9 KiB    81.83 ns/load
+    46340.9 KiB    90.72 ns/load
+    55108.9 KiB    99.79 ns/load
+    65536.0 KiB   102.33 ns/load
+    77935.9 KiB   102.62 ns/load
+    92681.9 KiB   103.25 ns/load
+   110217.9 KiB   105.88 ns/load
+   131072.0 KiB   107.71 ns/load
+   155871.8 KiB   107.90 ns/load
+   185363.8 KiB   109.65 ns/load
+   220435.9 KiB   111.86 ns/load
+   262144.0 KiB   111.58 ns/load
+   311743.5 KiB   114.96 ns/load
+   370727.5 KiB   112.60 ns/load
+   440871.9 KiB   113.33 ns/load
+   524288.0 KiB   113.71 ns/load
+
+-- Benchmarks finished in 224 s
+
+== A1: cache steps and repeatability ==
+
+== marcolenovo-x86: 2 sweep(s), 69 sizes ==
+Candidate cache boundaries (median rises >= 30%):
+    45.2 KiB ->   53.8 KiB:    0.84 ->    1.87 ns
+   181.0 KiB ->  215.2 KiB:    1.89 ->    2.51 ns
+     2.8 MiB ->    3.4 MiB:    4.84 ->    8.45 ns
+     3.4 MiB ->    4.0 MiB:    8.45 ->   11.67 ns
+    16.0 MiB ->   19.0 MiB:   20.37 ->   27.09 ns
+    19.0 MiB ->   22.6 MiB:   27.09 ->   45.39 ns
+    22.6 MiB ->   26.9 MiB:   45.39 ->   62.28 ns
+Repeatability: sizes where sweep medians differ by > 5%:
+    16.0 MiB:  10.9%
+    22.6 MiB:   6.7%
+    26.9 MiB:  12.3%
+    32.0 MiB:  16.3%
+
+== mba-arm: 2 sweep(s), 69 sizes ==
+Candidate cache boundaries (median rises >= 30%):
+   128.0 KiB ->  152.1 KiB:    0.67 ->    1.93 ns
+   861.0 KiB ->    1.0 MiB:    3.26 ->    4.69 ns
+     1.0 MiB ->    1.2 MiB:    4.69 ->    6.80 ns
+    11.3 MiB ->   13.5 MiB:    9.04 ->   13.14 ns
+    13.5 MiB ->   16.0 MiB:   13.14 ->   17.22 ns
+    22.6 MiB ->   26.9 MiB:   24.46 ->   34.88 ns
+    26.9 MiB ->   32.0 MiB:   34.88 ->   47.50 ns
+    45.3 MiB ->   53.8 MiB:   61.52 ->   79.98 ns
+Repeatability: sizes where sweep medians differ by > 5%:
+   512.0 KiB:   5.8%
+   861.0 KiB:  19.4%
+     1.0 MiB:  14.2%
+     1.2 MiB:  27.4%
+     1.4 MiB:  16.3%
+     2.0 MiB:  19.8%
+     2.4 MiB:  19.9%
+     2.8 MiB:  19.3%
+     3.4 MiB:  18.7%
+     4.0 MiB:  17.9%
+     4.8 MiB:  17.5%
+     5.7 MiB:  17.1%
+     6.7 MiB:  16.9%
+     8.0 MiB:  16.7%
+     9.5 MiB:  16.5%
+    11.3 MiB:  25.3%
+    13.5 MiB:  65.0%
+    19.0 MiB:   6.5%
+    32.0 MiB:  19.1%
+
+== suraj-x86: 2 sweep(s), 69 sizes ==
+Candidate cache boundaries (median rises >= 30%):
+    45.2 KiB ->   53.8 KiB:    0.81 ->    1.83 ns
+   181.0 KiB ->  215.2 KiB:    1.82 ->    2.42 ns
+     2.8 MiB ->    3.4 MiB:    4.82 ->   11.74 ns
+    22.6 MiB ->   26.9 MiB:   26.86 ->   37.98 ns
+    26.9 MiB ->   32.0 MiB:   37.98 ->   53.44 ns
+    38.1 MiB ->   45.3 MiB:   60.36 ->   86.23 ns
+Repeatability: sizes where sweep medians differ by > 5%:
+    32.0 KiB:   5.7%
+    53.8 KiB:   6.5%
+     2.8 MiB:  13.6%
+     3.4 MiB:  19.5%
+    26.9 MiB:   9.8%
+    32.0 MiB:  22.4%
+    38.1 MiB:  42.6%
+    45.3 MiB:  24.1%
+    64.0 MiB:   8.5%
+
+Wrote data\summary\a1_latency_summary.csv
+
+== A2 + B: roofline ceilings and H2 ==
+
+Roofline ceilings for marcolenovo-x86
+  B      =   37.95 GB/s     (A2 read_sum8, median of runs 1-5 at 256 MiB; the faster read kernel)
+  Between sizes (all runs of each size, not used for the roofline):
+             38.02 GB/s     at  256 MiB per array (read_sum8, 10 runs)
+             37.73 GB/s     at  512 MiB per array (read_sum8, 10 runs)
+             37.36 GB/s     at 1024 MiB per array (read_sum8, 10 runs)
+  P_peak =  140.70 GFLOP/s  (best GEMM median)
+  ridge point = P_peak / B = 3.7 FLOP/byte
+
+NOTE: marcolenovo-x86 has no llc_mib in data/machines.csv; H2 rows fall back to n >= 8192.
+H2 first look: predicted GEMV = 0.5 x B = 18.97 GFLOP/s
+  vs B = GEMV / predicted (roofline B); B@size = GEMV / (0.5 x B at that size, all runs)
+  H2 = row tests H2 (matrix larger than the LLC)
+      n    matrix  GEMV GFLOP/s  implied GB/s    vs B    B@256 MiB    B@512 MiB   B@1024 MiB
+   1024      4 MiB         26.72         53.44    1.41         1.41         1.42         1.43
+   2048     16 MiB         24.40         48.79    1.29         1.28         1.29         1.31
+   4096     64 MiB         20.25         40.51    1.07         1.07         1.07         1.08
+   8192    256 MiB         18.58         37.16    0.98         0.98         0.98         0.99  H2
+  16384   1024 MiB         18.41         36.82    0.97         0.97         0.98         0.99  H2
+
+  Only rows with n >= 8192 test H2 (no llc_mib for marcolenovo-x86).
+
+Done. Results and run_log.txt are in data\raw\marcolenovo-x86
+RESULT: no warnings.

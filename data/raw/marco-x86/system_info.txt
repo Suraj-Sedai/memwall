@@ -1,0 +1,42 @@
+date_utc: 2026-11-06 00:59
+platform: Windows-11-10.0.26300-SP0
+machine: AMD64  processor: AMD64 Family 26 Model 68 Stepping 0, AuthenticAMD
+python: 3.14.6
+
+
+
+Name                      : AMD Ryzen 7 9800X3D 8-Core Processor           
+NumberOfCores             : 8
+NumberOfLogicalProcessors : 16
+L2CacheSize               : 8192
+L3CacheSize               : 98304
+MaxClockSpeed             : 4700
+
+
+
+
+
+Capacity             : 51539607552
+Speed                : 4800
+ConfiguredClockSpeed : 6000
+SMBIOSMemoryType     : 34
+Manufacturer         : Corsair
+PartNumber           : CMK96GX5M2B6000Z30
+
+Capacity             : 51539607552
+Speed                : 4800
+ConfiguredClockSpeed : 6000
+SMBIOSMemoryType     : 34
+Manufacturer         : Corsair
+PartNumber           : CMK96GX5M2B6000Z30
+
+
+
+
+
+Manufacturer : ASUS
+Model        : System Product Name
+
+
+
+
