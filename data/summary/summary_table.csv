@@ -1,0 +1,6 @@
+machine,type,cpu,l1d_kib,l2_kib,llc_mib,measured_cache_steps,dram_latency_ns,B_GBps,B_1024MiB_GBps,peak_gemm_GFLOPs,ridge_point,gemv_over_predicted,gemm_over_gemv_n8192,H1,H2,H3
+alvaro-arm,laptop,Apple M1 Pro,128,12288,24,"128 KiB, 152 KiB, 6.73 MiB, 8 MiB, 9.51 MiB, 11.3 MiB, 22.6 MiB, 26.9 MiB",122.9,59.08,59.32,1301.3,22.0,n=4096: 0.54; n=8192: 0.55; n=16384: 0.48,80.0,PASS,FAIL,PASS
+marco-x86,desktop,AMD Ryzen 7 9800X3D,48,1024,96,"45.2 KiB, 861 KiB, 1 MiB, 1.19 MiB, 53.8 MiB, 64 MiB",98.9,69.47,57.56,292.6,4.2,n=8192: 0.80; n=16384: 0.71,10.6,PASS,FAIL,PASS
+marcolenovo-x86,laptop,Intel Core Ultra 9 386H,48,3072,18,"45.2 KiB, 181 KiB, 2.83 MiB, 3.36 MiB, 16 MiB, 19 MiB, 22.6 MiB",113.5,37.95,37.36,140.7,3.7,n=4096: 1.07; n=8192: 0.98; n=16384: 0.97,7.6,FAIL,PASS,FAIL
+mba-arm,laptop,Apple M5,128,16384,16,"128 KiB, 861 KiB, 1 MiB, 11.3 MiB, 13.5 MiB, 22.6 MiB, 26.9 MiB, 45.3 MiB",85.3,78.92,,1812.3,23.0,n=4096: 0.99; n=8192: 0.96,48.0,FAIL,PASS,PASS
+suraj-x86,laptop,Intel Core Ultra 9 275HX,48,3072,36,"45.2 KiB, 181 KiB, 2.83 MiB, 22.6 MiB, 26.9 MiB, 38.1 MiB",125.3,29.52,28.97,121.6,4.1,n=4096: 1.20; n=8192: 1.01; n=16384: 0.91,8.1,FAIL,PASS,FAIL
